@@ -1,0 +1,11 @@
+-- Rick's MLC Concussion
+
+Sandbox_ES = {
+    Sandbox_RicksMLC_Concussion = "Rick's MLC Conmoción",
+
+    Sandbox_RicksMLC_Concussion_ConcussionEffectTime = "Tiempo de efecto (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionEffectTime_tooltip = "Cuánto dura el efecto en segundos",
+
+    Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral"
+}

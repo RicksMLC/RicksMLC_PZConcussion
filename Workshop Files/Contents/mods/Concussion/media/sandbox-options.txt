@@ -1,0 +1,20 @@
+VERSION = 1,
+
+option RicksMLC_Concussion.EffectTimeSeconds
+{
+	type = integer,
+	default = 10,
+	min = 3,
+	max = 30,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ConcussionEffectTime,
+}
+
+option RicksMLC_Concussion.ThoughtsOn
+{
+	type = boolean,
+	default = true,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ThoughtsOn,
+}
+

@@ -1,0 +1,9 @@
+Sandbox_EN = {
+    Sandbox_RicksMLC_Concussion = "Rick's MLC Concussion",
+
+    Sandbox_RicksMLC_Concussion_ConcussionEffectTime = "Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionEffectTime_tooltip = "How long the effect lasts in seconds",
+
+    Sandbox_RicksMLC_Concussion_ThoughtsOn = "See Thoughts",
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed"
+}
