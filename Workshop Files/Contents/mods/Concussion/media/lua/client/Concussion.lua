@@ -72,7 +72,7 @@ function RicksMLC_Concussion:RandomiseWASD()
     newBinds[2] = {3,4,1,2}
     newBinds[3] = {4,1,2,3}
     newBinds[4] = {2,4,1,3}
-    local n = ZombRand(4) + 1
+    local n = ZombRand(1, 4)
     getCore():addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
     getCore():addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
     getCore():addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
