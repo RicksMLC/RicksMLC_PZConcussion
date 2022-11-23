@@ -43,8 +43,8 @@
             "type": "shell",
             "command": "xcopy",
             "args": [
-                "${env:USERPROFILE}\\Documents\\Ricks Mid Life Crisis\\ProjectZomboid Mods\\RicksMLC_PZConcussion\\Concussion",
-                "${env:USERPROFILE}\\Zomboid\\Workshop\\RicksMLCConcussion\\Contents\\mods\\Concussion",
+                "${env:USERPROFILE}\\Documents\\Ricks Mid Life Crisis\\ProjectZomboid Mods\\RicksMLC_PZConcussion\\Workshop Files",
+                "${env:USERPROFILE}\\Zomboid\\Workshop\\RicksMLCConcussion",
                 "/s",
                 "/e",
                 "/y",
