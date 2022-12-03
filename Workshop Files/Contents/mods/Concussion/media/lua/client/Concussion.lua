@@ -7,7 +7,6 @@
 -- Note: https://pzwiki.net/wiki/Category:Lua_Events
 
 require "ISBaseObject"
-require "RicksMLC_SaveState"
 
 RicksMLC_Concussion = ISBaseObject:derive("RicksMLC_Concussion");
 
@@ -18,13 +17,11 @@ function RicksMLC_Concussion:new()
 	setmetatable(o, self)
 	self.__index = self
 
-    self.startTime = -1
-	self.isConcussed = false
     self.character = nil
 
     self.isTimerOn = false
     self.elapsedTime = -1
-    self.timerEndSeconds = 10
+    self.timerEndSeconds = 0
 
     self.thoughtsOn = true
 
@@ -63,6 +60,7 @@ local fonts = {UIFont.AutoNormLarge, UIFont.AutoNormMedium, UIFont.AutoNormSmall
 function RicksMLC_Concussion:Think(player, thought, colourNum)
 	-- colourNum 1 = white, 2 = green, 3 = red
 	player:Say(thought, r[colourNum], g[colourNum], b[colourNum], fonts[2], 1, "radio")
+    --player:setHaloNote(thought, r[colourNum], g[colourNum], b[colourNum], 150)
 end
 
 function RicksMLC_Concussion:RandomiseWASD()
@@ -104,28 +102,92 @@ function RicksMLC_Concussion:EndConcussion()
     self:RestoreWASD()
 end
 
+function RicksMLC_Concussion.GetDefaultEffectTime()
+    return SandboxVars.RicksMLC_Concussion.EffectTimeSeconds
+end
+
 function RicksMLC_Concussion:HandleOnAIStateChange(character, newState, oldState)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange()")
 
     -- if oldState == CollideWithWallState and newState == PlayerGetUpState
     if oldState and newState then
-        oldStateName = character:getPreviousStateName()
-        newStateName = character:getCurrentStateName()
-        -- DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange() '" .. oldStateName .. "', '" .. newStateName .. "'")
+        local oldStateName = character:getPreviousStateName()
+        local newStateName = character:getCurrentStateName()
+        --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange() '" .. oldStateName .. "', '" .. newStateName .. "'")
         if oldStateName == "CollideWithWallState" and newStateName == "PlayerGetUpState" then
+            self:SetEffectTime(RicksMLC_Concussion.GetDefaultEffectTime())
             self:Concuss(character)
         end
     end
 end
 
+-- Wrap the ZombRand so it can be overridden in the test 
+function RicksMLC_Concussion.Random(min, max)
+    return ZombRand(min, max)
+end
+
+-- Wrap the getPlayer() so it can be overridden in the test 
+function RicksMLC_Concussion.getPlayer()
+    return getPlayer()
+end
+
+function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, handWeapon, damage)
+    -- Multiplayer PVP effect: Concuss the character based on the wielder perk level of the weapon
+    -- Probability of concussion is proportional to perkLevel ie lvl 0 is 0 in 10, 5 is 5/10, 10 is 10/10
+    -- Duration of concussion is strength level
+    
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnWeaponHitCharacter()")
+
+    if not handWeapon then return end
+
+    -- Probability to have concussion
+    -- Add factor 2 to perkLevel to give better probability.  This means lvl >= 8 is 100%
+    local perkLevel = 0
+    if handWeapon:getCategories():contains("Blunt") then
+        perkLevel = wielder:getPerkLevel(Perks.Blunt);
+    elseif handWeapon:getCategories():contains("SmallBlunt") then
+        perkLevel = wielder:getPerkLevel(Perks.SmallBlunt);
+    end
+    local chance = RicksMLC_Concussion.Random(1,10)
+    local minFactor = 2
+    if chance > perkLevel + minFactor then return end
+
+    -- The number of seconds for the concussion is 1 to 11, depending on the strength level
+    local strengthLevel = wielder:getPerkLevel(Perks.Strength)
+    self:SetEffectTime(strengthLevel + 1) 
+    self:Concuss(character)
+end
+
 function RicksMLC_Concussion.OnAIStateChange(character, newState, oldState)
+    -- Make sure this event is for the player, otherwise on multiplayer everyone gets concussed
+    if character ~= RicksMLC_Concussion.getPlayer() or isServer() then return end
+
     if RicksMLC_ConcussionInstance then
         RicksMLC_ConcussionInstance:HandleOnAIStateChange(character, newState, oldState)
     end
 end
 
+-- Event OnWeaponHitCharacter
+-- PVP only.  Don't concuss:
+--      if the wielder is the player (can't concuss yourself), or
+--      it the character is not the player or this is a server.
+function RicksMLC_Concussion.OnWeaponHitCharacter(wielder, character, handWeapon, damage)
+    if wielder == RicksMLC_Concussion.getPlayer() then return end
+    if character ~= RicksMLC_Concussion.getPlayer() or isServer() then return end
+
+    if RicksMLC_ConcussionInstance then
+        RicksMLC_ConcussionInstance:HandleOnWeaponHitCharacter(wielder, character, handWeapon, damage)
+    else
+        DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.OnWeaponHitCharacter() - no instance!")
+    end
+end
+
+
 function RicksMLC_Concussion.OnCreatePlayer()
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.OnCreatePlayer()")
+    -- Concussion only makese sense on the client.
+    if isServer() then return end
+
     RicksMLC_ConcussionInstance = RicksMLC_Concussion:new()
     RicksMLC_ConcussionInstance:SetEffectTime(SandboxVars.RicksMLC_Concussion.EffectTimeSeconds)
     if SandboxVars.RicksMLC_Concussion.ThoughtsOn then
@@ -137,6 +199,7 @@ end
 
 Events.OnCreatePlayer.Add(RicksMLC_Concussion.OnCreatePlayer)
 Events.OnAIStateChange.Add(RicksMLC_Concussion.OnAIStateChange)
+Events.OnWeaponHitCharacter.Add(RicksMLC_Concussion.OnWeaponHitCharacter)
 
 
 function RicksMLC_Concussion:HandleUpdateTimer()
@@ -144,14 +207,13 @@ function RicksMLC_Concussion:HandleUpdateTimer()
 
 	if self.elapsedTime >= self.timerEndSeconds then
         self:EndConcussion()
-        self:CancelTimer()
-        return
 	end
 end
 
 function RicksMLC_Concussion:CancelTimer()
+    Events.OnTick.Remove(RicksMLC_Concussion.UpdateTimer)
     self.isTimerOn = false
-	Events.OnTick.Remove(RicksMLC_Concussion.UpdateTimer)
+    self:SetEffectTime(0)
 end
 
 function RicksMLC_Concussion:StartTimer()
