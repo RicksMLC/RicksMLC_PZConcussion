@@ -18,3 +18,18 @@ option RicksMLC_Concussion.ThoughtsOn
 	translation = RicksMLC_Concussion_ThoughtsOn,
 }
 
+option RicksMLC_Drunk.EffectOn
+{
+	type = boolean,
+	default = true,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_DrunkOn,
+}
+
+option RicksMLC_Drunk.ThoughtsOn
+{
+	type = boolean,
+	default = true,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ThoughtsOn,
+}

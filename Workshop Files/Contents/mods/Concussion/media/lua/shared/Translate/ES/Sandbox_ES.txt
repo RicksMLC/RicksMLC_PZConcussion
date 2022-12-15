@@ -7,5 +7,11 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ConcussionEffectTime_tooltip = "Cuánto dura el efecto en segundos",
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
-    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral"
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
+	
+	Sandbox_RicksMLC_Concussion_DrunkOn = "El alcohol afecta el movimiento",
+	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Encienda / apague los tropiezos y / o caídas debido al nivel de moodle borracho",
+	
+	Sandbox_RicksMLC_Concussion_DrunkThoughts = "Ver pensamientos borrachos",
+	Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Encender / apagar los pensamientos cuando está borracho",
 }

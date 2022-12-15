@@ -2,7 +2,7 @@
 -- Rick's MLC Concussion
 
 require "ISBaseObject"
-
+require "RicksMLC_Timer"
 local iTest = nil
 
 ----------------------------------------------------------------
@@ -337,17 +337,17 @@ function Concussion_Test:TestPVPCase(id, handWeaponType, bluntLvl, smallBluntLvl
 end
 
 function Concussion_Test:areAllKeysChanged() 
-    return self.concussionInstance.origForward ~= getCore():getKey("Forward")
-        and self.concussionInstance.origBackward ~= getCore():getKey("Backward")
-        and self.concussionInstance.origLeft ~= getCore():getKey("Left")
-        and self.concussionInstance.origRight ~= getCore():getKey("Right")
+    return RicksMLC_WASDController.origForward ~= getCore():getKey("Forward")
+        and RicksMLC_WASDController.origBackward ~= getCore():getKey("Backward")
+        and RicksMLC_WASDController.origLeft ~= getCore():getKey("Left")
+        and RicksMLC_WASDController.origRight ~= getCore():getKey("Right")
 end
 
 function Concussion_Test:areAnyKeysChanged() 
-    return self.concussionInstance.origForward ~= getCore():getKey("Forward")
-        or self.concussionInstance.origBackward ~= getCore():getKey("Backward")
-        or self.concussionInstance.origLeft ~= getCore():getKey("Left")
-        or self.concussionInstance.origRight ~= getCore():getKey("Right")
+    return RicksMLC_WASDController.origForward ~= getCore():getKey("Forward")
+        or RicksMLC_WASDController.origBackward ~= getCore():getKey("Backward")
+        or RicksMLC_WASDController.origLeft ~= getCore():getKey("Left")
+        or RicksMLC_WASDController.origRight ~= getCore():getKey("Right")
 end
 
 
@@ -381,7 +381,9 @@ function Concussion_Test:Run()
     DebugLog.log(DebugType.Mod, "Concussion_Test:Run() begin")
 
     self:ClearTestResults() -- reinit the test results for writing to the test window.
+    self.testResults[#self.testResults+1] = "Rick's MLC Concussion Mod Tests"
     self:TestPVPCases()
+    -- The following test rely on a timer, so run it last
     self:TestRunIntoWallCases()
 
     DebugLog.log(DebugType.Mod, "Concussion_Test:Run() end")
@@ -403,7 +405,6 @@ end
 
 function Concussion_Test:Init()
     DebugLog.log(DebugType.Mod, "Concussion_Test:Init()")
-    -- Create the test instance of the ISRemoveGrass
 
     self.mockPlayer = MockPlayer:new(getPlayer())
     self.wielder = MockWielder:new()
@@ -461,7 +462,7 @@ end
 function Concussion_Test.IsTestSave()
     local saveInfo = getSaveInfo(getWorld():getWorld())
     DebugLog.log(DebugType.Mod, "Concussion_Test.OnLoad() '" .. saveInfo.saveName .. "'")
-	return saveInfo.saveName and saveInfo.saveName == "RicksMLC_Concussion_Test"
+	return saveInfo.saveName and saveInfo.saveName:find("RicksMLC_Test") ~= nil
 end
 
 function Concussion_Test.Execute()
@@ -494,7 +495,6 @@ function Concussion_Test.OnLoad()
     DebugLog.log(DebugType.Mod, "Concussion_Test.OnLoad()")
 	if Concussion_Test.IsTestSave() then
         DebugLog.log(DebugType.Mod, "  - Test File Loaded")
-        --FIXME: This is auto run: Concussion_Test.Execute()
     end
 end
 

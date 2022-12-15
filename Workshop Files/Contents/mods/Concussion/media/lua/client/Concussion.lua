@@ -1,12 +1,14 @@
 -- Rick's MLC Concussion
 -- TODO:
---      [+] Handle collision: https://pzwiki.net/wiki/Modding:Lua_Events/OnAIStateChange
+--      [+] Handle concussin trigger: https://pzwiki.net/wiki/Modding:Lua_Events/OnAIStateChange
 --      [?] Effects: blurry vision, pain, queasy, head injury, sleepy
 --      [+] Disorientation: randomise the WASD keys
+--      [-] multiplayer
 --
 -- Note: https://pzwiki.net/wiki/Category:Lua_Events
 
 require "ISBaseObject"
+require "RicksMLC_WASDCtrl"
 
 RicksMLC_Concussion = ISBaseObject:derive("RicksMLC_Concussion");
 
@@ -25,10 +27,10 @@ function RicksMLC_Concussion:new()
 
     self.thoughtsOn = true
 
-    self.origForward = getCore():getKey("Forward")
-    self.origBackward = getCore():getKey("Backward")
-    self.origLeft = getCore():getKey("Left")
-    self.origRight = getCore():getKey("Right")
+    -- self.origForward = getCore():getKey("Forward")
+    -- self.origBackward = getCore():getKey("Backward")
+    -- self.origLeft = getCore():getKey("Left")
+    -- self.origRight = getCore():getKey("Right")
 
     return o
 end
@@ -63,26 +65,26 @@ function RicksMLC_Concussion:Think(player, thought, colourNum)
     --player:setHaloNote(thought, r[colourNum], g[colourNum], b[colourNum], 150)
 end
 
-function RicksMLC_Concussion:RandomiseWASD()
-    local keyBinds = {"Forward", "Backward", "Left", "Right"}
-    local newBinds = {}
-    newBinds[1] = {2,3,4,1}
-    newBinds[2] = {3,4,1,2}
-    newBinds[3] = {4,1,2,3}
-    newBinds[4] = {2,4,1,3}
-    local n = ZombRand(1, 4)
-    getCore():addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
-    getCore():addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
-    getCore():addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
-    getCore():addKeyBinding(keyBinds[newBinds[n][4]], self.origRight)
-end
+-- function RicksMLC_Concussion:RandomiseWASD()
+--     local keyBinds = {"Forward", "Backward", "Left", "Right"}
+--     local newBinds = {}
+--     newBinds[1] = {2,3,4,1}
+--     newBinds[2] = {3,4,1,2}
+--     newBinds[3] = {4,1,2,3}
+--     newBinds[4] = {2,4,1,3}
+--     local n = ZombRand(1, 4)
+--     getCore():addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
+--     getCore():addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
+--     getCore():addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
+--     getCore():addKeyBinding(keyBinds[newBinds[n][4]], self.origRight)
+-- end
 
-function RicksMLC_Concussion:RestoreWASD()
-    getCore():addKeyBinding("Forward", self.origForward)
-    getCore():addKeyBinding("Backward", self.origBackward)
-    getCore():addKeyBinding("Left", self.origLeft)
-    getCore():addKeyBinding("Right", self.origRight)
-end
+-- function RicksMLC_Concussion:RestoreWASD()
+--     getCore():addKeyBinding("Forward", self.origForward)
+--     getCore():addKeyBinding("Backward", self.origBackward)
+--     getCore():addKeyBinding("Left", self.origLeft)
+--     getCore():addKeyBinding("Right", self.origRight)
+-- end
 
 function RicksMLC_Concussion:Concuss(character)
     --DebugLog.log("RicksMLC_Concussion:Concuss()")
@@ -90,7 +92,8 @@ function RicksMLC_Concussion:Concuss(character)
     if self.thoughtsOn then
         self:Think(character, getText("IGUI_RicksMLC_Ow"), 3)
     end
-    self:RandomiseWASD()
+    --self:RandomiseWASD()
+    RicksMLC_WASDController:RandomiseWASD()
     self:StartTimer()
 end
 
@@ -99,7 +102,8 @@ function RicksMLC_Concussion:EndConcussion()
     if self.thoughtsOn then
         self:Think(self.character, getText("IGUI_RicksMLC_Better"), 2)
     end
-    self:RestoreWASD()
+    --self:RestoreWASD()
+    RicksMLC_WASDController:RestoreWASD()
 end
 
 function RicksMLC_Concussion.GetDefaultEffectTime()
@@ -133,8 +137,8 @@ end
 
 function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, handWeapon, damage)
     -- Multiplayer PVP effect: Concuss the character based on the wielder perk level of the weapon
-    -- Probability of concussion is proportional to perkLevel ie lvl 0 is 0 in 10, 5 is 5/10, 10 is 10/10
-    -- Duration of concussion is strength level
+    -- Probability of concussion is proportional to perkLevel + 2. ie lvl 0 is 20%
+    -- Duration of concussion is strength level + 1
     
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnWeaponHitCharacter()")
 
@@ -169,7 +173,7 @@ end
 
 -- Event OnWeaponHitCharacter
 -- PVP only.  Don't concuss:
---      if the wielder is the player (can't concuss yourself), or
+--      if the wielder is the player (can't concuss yourself with weapons), or
 --      it the character is not the player or this is a server.
 function RicksMLC_Concussion.OnWeaponHitCharacter(wielder, character, handWeapon, damage)
     if wielder == RicksMLC_Concussion.getPlayer() then return end
@@ -183,10 +187,17 @@ function RicksMLC_Concussion.OnWeaponHitCharacter(wielder, character, handWeapon
 end
 
 
-function RicksMLC_Concussion.OnCreatePlayer()
-    --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.OnCreatePlayer()")
-    -- Concussion only makese sense on the client.
-    if isServer() then return end
+function RicksMLC_Concussion.OnGameStart()
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.GameStart()")
+    -- Concussion only makese sense on the player client/single player.
+    -- Return if this is a dedicated server.
+    if isServer() and not isClient() then return end
+
+    -- Single player isClient == false
+    -- Multiplayer isClient == true
+    if not isClient() then 
+        Events.OnWeaponHitCharacter.Add(RicksMLC_Concussion.OnWeaponHitCharacter)
+    end
 
     RicksMLC_ConcussionInstance = RicksMLC_Concussion:new()
     RicksMLC_ConcussionInstance:SetEffectTime(SandboxVars.RicksMLC_Concussion.EffectTimeSeconds)
@@ -196,11 +207,6 @@ function RicksMLC_Concussion.OnCreatePlayer()
         RicksMLC_ConcussionInstance:SetThoughtsOff()
     end
 end
-
-Events.OnCreatePlayer.Add(RicksMLC_Concussion.OnCreatePlayer)
-Events.OnAIStateChange.Add(RicksMLC_Concussion.OnAIStateChange)
-Events.OnWeaponHitCharacter.Add(RicksMLC_Concussion.OnWeaponHitCharacter)
-
 
 function RicksMLC_Concussion:HandleUpdateTimer()
 	self.elapsedTime = self.elapsedTime + GameTime.getInstance():getRealworldSecondsSinceLastUpdate()
@@ -232,3 +238,6 @@ function RicksMLC_Concussion.UpdateTimer()
 		--DebugLog.log(DebugType.Mod, "RicksMLC_EE:UpdateTimer() No instance found")	
 	end
 end
+
+Events.OnGameStart.Add(RicksMLC_Concussion.OnGameStart)
+Events.OnAIStateChange.Add(RicksMLC_Concussion.OnAIStateChange)
