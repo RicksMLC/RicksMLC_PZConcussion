@@ -27,11 +27,6 @@ function RicksMLC_Concussion:new()
 
     self.thoughtsOn = true
 
-    -- self.origForward = getCore():getKey("Forward")
-    -- self.origBackward = getCore():getKey("Backward")
-    -- self.origLeft = getCore():getKey("Left")
-    -- self.origRight = getCore():getKey("Right")
-
     return o
 end
 
@@ -65,34 +60,15 @@ function RicksMLC_Concussion:Think(player, thought, colourNum)
     --player:setHaloNote(thought, r[colourNum], g[colourNum], b[colourNum], 150)
 end
 
--- function RicksMLC_Concussion:RandomiseWASD()
---     local keyBinds = {"Forward", "Backward", "Left", "Right"}
---     local newBinds = {}
---     newBinds[1] = {2,3,4,1}
---     newBinds[2] = {3,4,1,2}
---     newBinds[3] = {4,1,2,3}
---     newBinds[4] = {2,4,1,3}
---     local n = ZombRand(1, 4)
---     getCore():addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
---     getCore():addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
---     getCore():addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
---     getCore():addKeyBinding(keyBinds[newBinds[n][4]], self.origRight)
--- end
-
--- function RicksMLC_Concussion:RestoreWASD()
---     getCore():addKeyBinding("Forward", self.origForward)
---     getCore():addKeyBinding("Backward", self.origBackward)
---     getCore():addKeyBinding("Left", self.origLeft)
---     getCore():addKeyBinding("Right", self.origRight)
--- end
-
-function RicksMLC_Concussion:Concuss(character)
+function RicksMLC_Concussion:Concuss(character, concussTime)
     --DebugLog.log("RicksMLC_Concussion:Concuss()")
+    if concussTime == 0 then return end
+
+    self:SetEffectTime(concussTime)
     self.character = character
     if self.thoughtsOn then
         self:Think(character, getText("IGUI_RicksMLC_Ow"), 3)
     end
-    --self:RandomiseWASD()
     RicksMLC_WASDController:RandomiseWASD()
     self:StartTimer()
 end
@@ -102,25 +78,34 @@ function RicksMLC_Concussion:EndConcussion()
     if self.thoughtsOn then
         self:Think(self.character, getText("IGUI_RicksMLC_Better"), 2)
     end
-    --self:RestoreWASD()
     RicksMLC_WASDController:RestoreWASD()
 end
 
-function RicksMLC_Concussion.GetDefaultEffectTime()
-    return SandboxVars.RicksMLC_Concussion.EffectTimeSeconds
+function RicksMLC_Concussion.GetBaseWallEffectTime()
+    return SandboxVars.RicksMLC_Concussion.WallEffectTimeSeconds
+end
+
+function RicksMLC_Concussion.GetBaseTripEffectTime()
+    return SandboxVars.RicksMLC_Concussion.TripEffectTimeSeconds
 end
 
 function RicksMLC_Concussion:HandleOnAIStateChange(character, newState, oldState)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange()")
 
-    -- if oldState == CollideWithWallState and newState == PlayerGetUpState
     if oldState and newState then
         local oldStateName = character:getPreviousStateName()
         local newStateName = character:getCurrentStateName()
-        --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange() '" .. oldStateName .. "', '" .. newStateName .. "'")
-        if oldStateName == "CollideWithWallState" and newStateName == "PlayerGetUpState" then
-            self:SetEffectTime(RicksMLC_Concussion.GetDefaultEffectTime())
-            self:Concuss(character)
+        if newStateName ==  "PlayerGetUpState" then
+            if oldStateName == "CollideWithWallState" then
+                self:Concuss(character, RicksMLC_Concussion.GetBaseWallEffectTime())
+            elseif oldStateName == "BumpedState" and not RicksMLC_Drunk.IsDrunk() then
+                -- "BumpedState" is when drunk or trip while sprinting.  Ignore drunk trips - they are controlled in RicksMLC_Drunk.
+                local chance = RicksMLC_Concussion.Random(1, 100)
+                if chance <= SandboxVars.RicksMLC_Concussion.TripChance then
+                    self:Concuss(character, RicksMLC_Concussion.GetBaseTripEffectTime())
+                end
+            end
+            --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange(): '" .. oldStateName .. "'")
         end
     end
 end
@@ -158,8 +143,7 @@ function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, hand
 
     -- The number of seconds for the concussion is 1 to 11, depending on the strength level
     local strengthLevel = wielder:getPerkLevel(Perks.Strength)
-    self:SetEffectTime(strengthLevel + 1) 
-    self:Concuss(character)
+    self:Concuss(character, strengthLevel + 1)
 end
 
 function RicksMLC_Concussion.OnAIStateChange(character, newState, oldState)
@@ -227,15 +211,12 @@ function RicksMLC_Concussion:StartTimer()
 		self.isTimerOn = true
 		self.elapsedTime = 0
 		Events.OnTick.Add(RicksMLC_Concussion.UpdateTimer)
-		--DebugLog.log(DebugType.Mod, "RicksMLC_EE:HandleLevelUp() added UpdateTimer")
 	end
 end
 
 function RicksMLC_Concussion.UpdateTimer()
 	if (RicksMLC_ConcussionInstance) then
 		RicksMLC_ConcussionInstance:HandleUpdateTimer()
-	else
-		--DebugLog.log(DebugType.Mod, "RicksMLC_EE:UpdateTimer() No instance found")	
 	end
 end
 

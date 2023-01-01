@@ -1,15 +1,35 @@
 Sandbox_EN = {
     Sandbox_RicksMLC_Concussion = "Rick's MLC Concussion",
 
-    Sandbox_RicksMLC_Concussion_ConcussionEffectTime = "Effect Time (seconds)",
-    Sandbox_RicksMLC_Concussion_ConcussionEffectTime_tooltip = "How long the effect lasts in seconds",
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime = "Wall Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "How long the effect lasts in seconds. Set to 0 to disable wall concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "Trip Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "How long the effect lasts in seconds. Set to 0 to disable sober trip concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance = "Trip Concussion Probability %",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Chance to be concussed from a trip fall",
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "See Thoughts",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
-	
-	Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
-	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",
-	
-	Sandbox_RicksMLC_Concussion_DrunkThoughts = "See drunk thoughts",
-	Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Turn on/off thoughts when drunk",
+
+
+    Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
+    Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",
+
+    Sandbox_RicksMLC_Concussion_DrunkThoughts = "See drunk thoughts",
+    Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Turn on/off thoughts when drunk",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "Base % Chance to stagger",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "Each in-game minute (about 1 seconds real time) has this base chance to stagger (n x drunk level)",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "Base Stagger (seconds)",
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "Base duration of the stagger in seconds (n x drunk level)",
+
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "Cooldown interval between staggers"
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "Number of in-game minutes (about 1 second real time) to wait to check for stagger after the last succssful one."
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % chance to trip",
+    Sandbox_RicksMLC_Concussion_DrunkBseProbTrip_tooltip = "Each in-game minute (about 1 seconds real time) has this base chance to trip (n x drunk level)",
+
 }

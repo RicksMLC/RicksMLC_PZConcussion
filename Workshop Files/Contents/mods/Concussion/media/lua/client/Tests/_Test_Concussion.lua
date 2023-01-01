@@ -3,7 +3,22 @@
 
 require "ISBaseObject"
 require "RicksMLC_Timer"
+require "RicksMLC_Concussion"
+require "RicksMLC_TestHarness"
 local iTest = nil
+
+--------------------------------------------------------------------
+-- Overloads:
+
+-- Overload the random so a fixed value can be returned for test cases
+local origRandom = RicksMLC_Concussion.Random
+local fixedRandom = -1
+function RicksMLC_Concussion.Random(min, max)
+    if fixedRandom == -1 then return origRandom(min, max) end
+    return fixedRandom
+end
+
+-- end Overloads
 
 ----------------------------------------------------------------
 local MockWielder = ISBaseObject:derive("MockWielder");
@@ -132,6 +147,11 @@ end
 
 local Concussion_Test = ISBaseObject:derive("Concussion_Test")
 
+-- Overloadable getPlayer() so the mock player can sub in for the real player during test runs.
+function Concussion_Test.getPlayer()
+    return iTest.mockPlayer
+end
+
 function Concussion_Test:new()
     local o = {}
     setmetatable(o, self)
@@ -150,20 +170,45 @@ function Concussion_Test:new()
     o.testRunIntoWallResult = {}
     o.numRunIntoWallCallbacks = 0
 
-    o.resultsWindow = nil
+    --o.resultsWindow = nil
     o.testResults = {}
+
+    o.testSuiteId = 0
+
     return o
 end
 
--- TODO: Overload for TestRunIntoWall 
-local origSetEffectTimeFn = RicksMLC_Concussion.GetDefaultEffectTime
+---------------------------------------------
+-- Overloads for TestRunIntoWall and Trip
 local overrideEffectTime = -1
-function RicksMLC_Concussion.GetDefaultEffectTime(time)
-    if overrideEffectTime == -1 then return origSetEffectTimeFn(time) end
+local origBaseWallEffectTimeFn = RicksMLC_Concussion.GetBaseWallEffectTime
+function RicksMLC_Concussion.GetBaseWallEffectTime(time)
+    if overrideEffectTime == -1 then return origBaseWallSetEffectTimeFn(time) end
     return overrideEffectTime    
 end
 
-function Concussion_Test:TestRunIntoWall(testId, isPlayer, newState, oldState, isExpectConcussion)
+local origBaseTripEffectTimeFn = RicksMLC_Concussion.GetBaseTripEffectTime
+function RicksMLC_Concussion.GetBaseTripEffectTime(time)
+    if overrideEffectTime == -1 then return origBaseTripEffectTimeFn(time) end
+    return overrideEffectTime
+end
+---------------------------------------------
+
+function Concussion_Test:AddTestResult(result)
+    -- FIXME: the self.testResults may be redundant:
+    self.testResults[#self.testResults+1] = result
+    RicksMLC_TestHarness.Instance():AddTestResult(result)
+end
+
+function Concussion_Test:GetTestResults()
+    return self.testResults
+end
+
+function Concussion_Test:GetName()
+    return "Rick's MLC Concussion Mod: Concussion Tests"
+end
+
+function Concussion_Test:TestRunIntoWall(testId, isPlayer, newState, oldState, tripProb, isExpectConcussion)
     DebugLog.log(DebugType.Mod, "Concussion_Test:TestRunIntoWall() begin")
 
     self.testRunIntoWallResult[testId] = {"started", ""}
@@ -181,6 +226,9 @@ function Concussion_Test:TestRunIntoWall(testId, isPlayer, newState, oldState, i
     end
     self.mockPlayer.prevStateName = oldState
     self.mockPlayer.currentStateName = newState
+    fixedRandom = tripProb
+    local rnd = RicksMLC_Concussion.Random(0, 100)
+    DebugLog.log(DebugType.Mod, "Concussion_Test:TestRunIntoWall()   rnd: " .. tostring(rnd))
 
     RicksMLC_Concussion.OnAIStateChange(character, newState, oldState)
 
@@ -211,6 +259,7 @@ function Concussion_Test:TestRunIntoWall(testId, isPlayer, newState, oldState, i
     overrideEffectTime = -1 -- Reset the override so a legitimate call will use the real value
     self.mockPlayer.prevStateName = nil    -- Reset the override state names so the legitimate states are used
     self.mockPlayer.currentStateName = nil
+    fixedRandom = -1 -- reset the Random() to be random again
 
     self.timer:StartTimer(Concussion_Test.TestRunIntoWallCallback)
     
@@ -238,40 +287,46 @@ function Concussion_Test.TestRunIntoWallCallback(iTest, testId, isExpectConcussi
     end
 
     iTest.testRunIntoWallResult[testId][3] = result
-    iTest.testResults[#iTest.testResults+1] = "Case " .. tostring(testId) .. ": " ..iTest.testRunIntoWallResult[testId][1] .. ", " .. iTest.testRunIntoWallResult[testId][2] .. ", " ..iTest.testRunIntoWallResult[testId][3]
+    -- Fixme: Remove
+    --iTest.testResults[#iTest.testResults+1] = "Case " .. tostring(testId) .. ": " ..iTest.testRunIntoWallResult[testId][1] .. ", " .. iTest.testRunIntoWallResult[testId][2] .. ", " ..iTest.testRunIntoWallResult[testId][3]
+    iTest:AddTestResult("Case " .. tostring(testId) .. ": " ..iTest.testRunIntoWallResult[testId][1] .. ", " .. iTest.testRunIntoWallResult[testId][2] .. ", " ..iTest.testRunIntoWallResult[testId][3])
     iTest.numRunIntoWallCallbacks = iTest.numRunIntoWallCallbacks + 1
     if iTest.numRunIntoWallCallbacks < iTest.numRunIntoWallCases then
         iTest:RunNextCase(iTest.numRunIntoWallCallbacks + 1)
     else
-        DebugLog.log(DebugType.Mod, "Concussion_Test.TestRunIntoWallCheckTimer(): Call EndTest()")
+        DebugLog.log(DebugType.Mod, "Concussion_Test.TestRunIntoWallCheckTimer(): Call FinishRunIntoWallCases()")
         iTest:FinishRunIntoWallCases()
     end
 end
 
 function Concussion_Test:FinishRunIntoWallCases()
-    iTest.testResults[#iTest.testResults+1] = "Run Into Wall Tests: complete."
-    Concussion_Test.EndTest()
+    iTest:AddTestResult("Run Into Wall Tests: complete.")
+    iTest:EndTest()
 end
 
 local runIntoWallCases = {
---  id, isPlayer, newState,        oldState             , isExpectConcussion
-    {1, false, "PlayerGetUpState", "CollideWithWallState", false},
-    {2, true,  "PlayerGetUpState", "CollideWithWallState", true},
-    {3, true,  "SomeWrongState  ", "CollideWithWallState", false},
-    {4, true,  "PlayerGetUpState", "SomeOtherWrongState",  false},
+--  id, isPlayer, newState,        oldState               rand isExpectConcussion
+    {1, false, "PlayerGetUpState", "CollideWithWallState",  0, false}, -- Rand is ignored for collide with wall
+    {2, true,  "PlayerGetUpState", "CollideWithWallState",  0, true},
+    {3, true,  "SomeWrongState  ", "CollideWithWallState",  0, false},
+    {4, true,  "PlayerGetUpState", "SomeOtherWrongState",   0, false},
+    {5, true,  "PlayerGetUpState", "BumpedState",          10, true},  -- default is 10%, so Rand needs to be <= 10
+    {6, true,  "PlayerGetUpState", "BumpedState",          11, false} -- No trip as rand is > 10
 }
 
 function Concussion_Test:RunNextCase(caseId)
     testCase = runIntoWallCases[caseId]
     iTest.mockPlayer.lastThought = "" -- Clear your head of the previous tests
-    self:TestRunIntoWall(testCase[1], testCase[2], testCase[3], testCase[4], testCase[5])
+    self:TestRunIntoWall(testCase[1], testCase[2], testCase[3], testCase[4], testCase[5], testCase[6])
 end
 
 function Concussion_Test:TestRunIntoWallCases()
     -- Run the test run into wall cases.
     -- waiting for the callback on each case?
-    iTest.testResults[#iTest.testResults+1] = "Run Into Wall Tests: begin..."
+    iTest.testRunIntoWallResult = {}
+    iTest.numRunIntoWallCallbacks = 0
     iTest.numRunIntoWallCases = #runIntoWallCases
+    iTest:AddTestResult("Run Into Wall Tests: " .. tostring(iTest.numRunIntoWallCases))
     iTest:RunNextCase(1)
 end
 
@@ -281,19 +336,6 @@ function Concussion_Test:newInventoryItem(type)
         item = InventoryItemFactory.CreateItem(type)
     end
 	return item
-end
-
--- Overload the random so a fixed value can be returned for test cases
-local origRandom = RicksMLC_Concussion.Random
-local fixedRandom = -1
-function RicksMLC_Concussion.Random(min, max)
-    if fixedRandom == -1 then return origRandom(min, max) end
-    return fixedRandom
-end
-
--- Overloadable getPlayer() so the mock player can sub in for the real player during test runs.
-function Concussion_Test.getPlayer()
-    return iTest.mockPlayer
 end
 
 local testPVPCases = {
@@ -362,13 +404,13 @@ function Concussion_Test:ResetForNextTestCase()
 end
 
 function Concussion_Test:TestPVPCases()
-    self.testResults[#self.testResults+1] = "TestPVPCases(): " .. tostring(#testPVPCases)
+    self:AddTestResult("TestPVPCases(): " .. tostring(#testPVPCases))
     for i, testCase in ipairs(testPVPCases) do 
-        self.testResults[#self.testResults+1] = self:TestPVPCase(testCase[1], testCase[2], testCase[3], testCase[4], testCase[5], testCase[6], testCase[7])
+        self:AddTestResult(self:TestPVPCase(testCase[1], testCase[2], testCase[3], testCase[4], testCase[5], testCase[6], testCase[7]))
         -- reset the RicksMLC_ConcussionInstance state to prepare for the next test
         self:ResetForNextTestCase()
     end
-    self.testResults[#self.testResults+1] = "TestPVPCases(): complete."
+    self:AddTestResult("TestPVPCases(): complete.")
     fixedRandom = -1
 end
 
@@ -381,7 +423,6 @@ function Concussion_Test:Run()
     DebugLog.log(DebugType.Mod, "Concussion_Test:Run() begin")
 
     self:ClearTestResults() -- reinit the test results for writing to the test window.
-    self.testResults[#self.testResults+1] = "Rick's MLC Concussion Mod Tests"
     self:TestPVPCases()
     -- The following test rely on a timer, so run it last
     self:TestRunIntoWallCases()
@@ -408,48 +449,45 @@ function Concussion_Test:Init()
 
     self.mockPlayer = MockPlayer:new(getPlayer())
     self.wielder = MockWielder:new()
-    self:ClearTestResults()
-    self:CreateWindow()
+
+    -- FIXME: Remove:
+    --self:ClearTestResults()
+    --self:CreateWindow()
 
     self.origGetPlayerFn = RicksMLC_Concussion.getPlayer
     RicksMLC_Concussion.getPlayer = Concussion_Test.getPlayer
 
     -- Create the object instances to test, if any
     self.concussionInstance = RicksMLC_Concussion:Instance()
-    --if not self.concussionInstance thenplayer
-    --    DebugLog.log(DebugType.Mod, "Concussion_Test:Init(): ERROR self.concussionInstance is nil")
-    --    self.testResults[#self.testResults+1] = "Concussion_Test:Init(): ERROR self.concussionInstance is nil"
-    --    return
-    --end
 
     self.isReady = true
 end
 
-function Concussion_Test:CreateWindow()
-    if self.resultsWindow then
-        self.resultsWindow:setObject(self.testResults)
-    else
-        DebugLog.log(DebugType.Mod, "Concussion_Test:CreateWindow()")
-        local x = getPlayerScreenLeft(self.mockPlayer:getPlayerNum())
-        local y = getPlayerScreenTop(self.mockPlayer:getPlayerNum())
-        local w = getPlayerScreenWidth(self.mockPlayer:getPlayerNum())
-        local h = getPlayerScreenHeight(self.mockPlayer:getPlayerNum())
-        self.resultsWindow = _Test_RicksMLC_UI_Window:new(x + 70, y + 50, self.mockPlayer, self.testResults)
-        self.resultsWindow:initialise()
-        self.resultsWindow:addToUIManager()
-        _Test_RicksMLC_UI_Window.windows[self.mockPlayer] = window
-        if self.mockPlayer:getPlayerNum() == 0 then
-            ISLayoutManager.RegisterWindow('Concussion_Test', ISCollapsableWindow, self.resultsWindow)
-        end
-    end
-
-    self.resultsWindow:setVisible(true)
-    self.resultsWindow:addToUIManager()
-    local joypadData = JoypadState.players[self.mockPlayer:getPlayerNum()+1]
-    if joypadData then
-        joypadData.focus = window
-    end
-end
+-- function Concussion_Test:CreateWindow()
+--     if self.resultsWindow then
+--         self.resultsWindow:setObject(self.testResults)
+--     else
+--         DebugLog.log(DebugType.Mod, "Concussion_Test:CreateWindow()")
+--         local x = getPlayerScreenLeft(self.mockPlayer:getPlayerNum())
+--         local y = getPlayerScreenTop(self.mockPlayer:getPlayerNum())
+--         local w = getPlayerScreenWidth(self.mockPlayer:getPlayerNum())
+--         local h = getPlayerScreenHeight(self.mockPlayer:getPlayerNum())
+--         self.resultsWindow = _Test_RicksMLC_UI_Window:new(x + 70, y + 50, self.mockPlayer, self.testResults)
+--         self.resultsWindow:initialise()
+--         self.resultsWindow:addToUIManager()
+--         _Test_RicksMLC_UI_Window.windows[self.mockPlayer] = window
+--         if self.mockPlayer:getPlayerNum() == 0 then
+--             ISLayoutManager.RegisterWindow('Concussion_Test', ISCollapsableWindow, self.resultsWindow)
+--         end
+--     end
+--
+--     self.resultsWindow:setVisible(true)
+--     self.resultsWindow:addToUIManager()
+--     local joypadData = JoypadState.players[self.mockPlayer:getPlayerNum()+1]
+--     if joypadData then
+--         joypadData.focus = window
+--     end
+-- end
 
 function Concussion_Test:Teardown()
     DebugLog.log(DebugType.Mod, "Concussion_Test:Teardown()")
@@ -457,6 +495,7 @@ function Concussion_Test:Teardown()
     self.isReady = false
 end
 
+----------------------------------------------------------------
 -- Static --
 
 function Concussion_Test.IsTestSave()
@@ -465,29 +504,30 @@ function Concussion_Test.IsTestSave()
 	return saveInfo.saveName and saveInfo.saveName:find("RicksMLC_Test") ~= nil
 end
 
-function Concussion_Test.Execute()
-    if iTest then 
-        DebugLog.log(DebugType.Mod, "Concussion_Test.Execute(): test already running - abort")
-        return 
-    end
+-- function Concussion_Test.Execute()
+--     if iTest then 
+--         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute(): test already running - abort")
+--         return 
+--     end
 
-    iTest = Concussion_Test:new()
-    iTest:Init()
-    if iTest.isReady then 
-        DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() isReady")
-        iTest:Run()
-        DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() Run complete.")
-    end
-    -- TODO: Call this after the last callbacks have returned
-    --Concussion_Test.EndTest()
-end
+--     iTest = Concussion_Test:new()
+--     iTest:Init()
+--     if iTest.isReady then 
+--         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() isReady")
+--         iTest:Run()
+--         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() Run complete.")
+--     end
+-- end
 
-function Concussion_Test.EndTest()
-    DebugLog.log(DebugType.Mod, "Concussion_Test.EndTest() - setting iTest to nil")
-    if iTest then
-        iTest:Teardown()
-        iTest = nil
-    end
+function Concussion_Test:EndTest()
+    -- Callback to the harness to let it know we are finished
+    RicksMLC_TestHarness.Instance():EndTest(self.testSuiteId)
+    -- FIXME: Remove once the Test_Harness is working
+    -- DebugLog.log(DebugType.Mod, "Concussion_Test.EndTest() - setting iTest to nil")
+    -- if iTest then
+    --     iTest:Teardown()
+    --     iTest = nil
+    -- end
 end
 
 function Concussion_Test.OnLoad()
@@ -500,19 +540,29 @@ end
 
 function Concussion_Test.OnGameStart()
     DebugLog.log(DebugType.Mod, "Concussion_Test.OnGameStart()")
-end
 
-function Concussion_Test.HandleOnKeyPressed(key)
-	-- Hard coded to F9 for now
-	if key == nil then return end
-
-	if key == Keyboard.KEY_F9 and Concussion_Test.IsTestSave() then
-        DebugLog.log(DebugLog.Mod, "Concussion_Test.HandleOnKeyPressed() Execute test")
-        Concussion_Test.Execute()
+    if iTest then 
+        DebugLog.log(DebugType.Mod, "Concussion_Test.OnGameStart(): test already running - abort")
+        return 
     end
+
+    iTest = Concussion_Test:new()
+    iTest.testSuiteId = RicksMLC_TestHarness.Instance():Register(iTest)
+
 end
 
-Events.OnKeyPressed.Add(Concussion_Test.HandleOnKeyPressed)
+-- function Concussion_Test.HandleOnKeyPressed(key)
+-- 	-- Hard coded to F9 for now
+-- 	if key == nil then return end
+
+-- 	if key == Keyboard.KEY_F9 and Concussion_Test.IsTestSave() then
+--         DebugLog.log(DebugLog.Mod, "Concussion_Test.HandleOnKeyPressed() Execute test")
+--         Concussion_Test.Execute()
+--     end
+-- end
+
+-- FIXME: Remove
+--Events.OnKeyPressed.Add(Concussion_Test.HandleOnKeyPressed)
 
 Events.OnGameStart.Add(Concussion_Test.OnGameStart)
 Events.OnLoad.Add(Concussion_Test.OnLoad)

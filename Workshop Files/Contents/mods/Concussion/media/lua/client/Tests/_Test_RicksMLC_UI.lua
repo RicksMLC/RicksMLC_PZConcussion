@@ -19,7 +19,7 @@ function _Test_RicksMLC_UI_Window:new(x, y, character, object, title)
 end
 
 function _Test_RicksMLC_UI_Window.getRichText(testResults)
-	local text = "Test Results: "
+	local text = "Rick's MLC Test Results"
 	for i = 1, #testResults do
 		text = text .. " <LINE> <INDENT:0> " .. testResults[i] .. " "
 	end

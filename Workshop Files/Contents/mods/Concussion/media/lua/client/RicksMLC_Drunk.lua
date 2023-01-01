@@ -32,7 +32,7 @@ function RicksMLC_Drunk.Think(player, thought, colourNum)
     --player:setHaloNote(thought, r[colourNum], g[colourNum], b[colourNum], 150)
 end
 
-RicksMLC_DrunkHandler = nil
+local RicksMLC_DrunkHandler = nil
 
 function RicksMLC_Drunk.Instance() return RicksMLC_DrunkHandler end
 
@@ -43,11 +43,11 @@ function RicksMLC_Drunk:new()
 
     o.character = nil
 
-    o.baseChanceToStagger = 0.2 -- lvl1=20%, lvl2=40% lvl3=%
+    o.baseChanceToStagger = 20 -- lvl1=20%, lvl2=40% lvl3=60%
     o.baseStaggerTimeSeconds = 0.30 -- multiply by the drunk level
-    o.baseChanceToTrip = 0.12
+    o.baseChanceToTrip = 12 -- percentage
 
-    o.cooldownCounter = 5 -- Cooldown for the every minute listener after the effect is finished.
+    o.cooldownCounter = 2 -- Cooldown for the every minute listener after the effect is finished.
 
     o.drunkLevel = 0
     o.chanceToStagger = 0
@@ -83,19 +83,22 @@ local ScriptLvl4 = {
 
 local ScriptLvl3 = {
     "* Whoa *",
-    "* Shhhh - derez zumbhies *"
+    "* Shhhh - derez zumbhies *",
+    "* Donchu worry *GLARGH* this will fix you *",
+    "* Shoopit Zombieh, makin'meloogbad *"
 }
 
 function RicksMLC_Drunk:SayDrunkLevel()
     if not SandboxVars.RicksMLC_Drunk.ThoughtsOn then return end
 
-    local thoughtColor = ZombRand(1, 6)
+    local thoughtColor = PZMath.roundToInt(ZombRand(1, 6))
+    local n = PZMath.roundToInt(RicksMLC_Drunk.Random(1, 4))
     if self.drunkLevel >= 4 then
-        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl4[ZombRand(1, 4)], thoughtColor)
+        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl4[n] .. " " .. tostring(n), thoughtColor)
         return
     end
     if self.drunkLevel >= 3 then
-        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl3[ZombRand(1, 2)], thoughtColor)
+        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl3[n] .. " " .. tostring(n), thoughtColor)
         return
     end
     if self.drunkLevel >= 2 then
@@ -182,6 +185,27 @@ function RicksMLC_Drunk.Random(min, max)
     return ZombRandFloat(min, max)
 end
 
+function RicksMLC_Drunk:GetChanceToStagger()
+    return self.baseChanceToStagger * self.drunkLevel
+end
+
+function RicksMLC_Drunk:GetStaggerTime()
+    if self.character:isSeatedInVehicle() then
+        -- change the vehicle control for the Tipsy level time only.
+        return self.baseStaggerTimeSeconds
+    else
+        return self.baseStaggerTimeSeconds * self.drunkLevel
+    end
+end
+
+function RicksMLC_Drunk:GetChanceToTrip()
+    local chance = self.baseChanceToTrip * self.drunkLevel
+    if self.character:isRunning() or self.character:isSprinting() then 
+        chance = chance * 2
+    end
+    return chance
+end
+
 function RicksMLC_Drunk:HandleEveryOneMinute()
     local drunkMoodleLevel = getPlayer():getMoodles():getMoodleLevel(MoodleType.Drunk)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:HandleEveryOneMinute() drunkLevel:" .. tostring(self.drunkLevel))
@@ -203,26 +227,22 @@ function RicksMLC_Drunk:HandleEveryOneMinute()
         self.cooldownCounter = self.cooldownCounter - 1
         return 
     end
-    if self.character:isSeatedInVehicle() then
-        self.staggerTimeSeconds = self.baseStaggerTimeSeconds
-    else
-        self.staggerTimeSeconds = self.baseStaggerTimeSeconds * self.drunkLevel
-    end
-    self.chanceToStagger = self.baseChanceToStagger * self.drunkLevel
-    local makeStagger = RicksMLC_Drunk.Random(0.0, 1.0)
+
+    self.staggerTimeSeconds = self:GetStaggerTime()
+    self.chanceToStagger = self:GetChanceToStagger()
+    
+    local makeStagger = RicksMLC_Drunk.Random(0.0, 100.0)
     if makeStagger < self.chanceToStagger then
         self:StartStaggerTimer()
     end
 
+    -- Tripping: Can't trip in a vehicle, so just return.
     if self.character:isSeatedInVehicle() then return end
 
-    self.chanceToTrip = self.baseChanceToTrip * self.drunkLevel
-    if self.character:isRunning() or self.character:isSprinting() then 
-        self.chanceToTrip = self.chanceToTrip * 2
-    end
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:HandleEveryOneMinute() chanceToTrip:" .. tostring(self.chanceToTrip))
     if (self.drunkLevel >= 2 and (self.character:isRunning() or self.character:isSprinting())) or self.drunkLevel > 3 then
-        local makeTrip = RicksMLC_Drunk.Random(0.0, 1.0)
+        local makeTrip = RicksMLC_Drunk.Random(0.0, 100.0)
+        self.chanceToTrip = self:GetChanceToTrip()
         if makeTrip < self.chanceToTrip then
             self:TripPlayer()
         end
@@ -255,6 +275,8 @@ function RicksMLC_Drunk:StopDrunkHandler()
     self.drunkCheckNum = 0
     self.drunkLevel = drunkMoodleLevel
     self.started = false
+    self.chanceToTrip = 0
+    self.chanceToStagger = 0
 end
 
 function RicksMLC_Drunk.IsDrunk()
@@ -264,10 +286,20 @@ function RicksMLC_Drunk.IsDrunk()
 end
 
 function RicksMLC_Drunk:HandleOnExitVehicle()
-    local trip = RicksMLC_Drunk.Random(0, 1)
+    if not RicksMLC_Drunk.IsDrunk() then return end
+
+    local trip = RicksMLC_Drunk.Random(1, 100)
+    self.chanceToTrip = self:GetChanceToTrip()
     if trip < self.chanceToTrip * 2 then
         self:TripPlayer()
     end
+end
+
+function RicksMLC_Drunk:SetSandboxVars()
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:SetSandboxVars()")
+
+    self.cooldownCounter = SandboxVars.RicksMLC_Drunk.StaggerCooldown or 3
+
 end
 
 -------------------------------------------------------------------------------
@@ -297,9 +329,14 @@ function RicksMLC_Drunk.InitPlayer()
 
     if isServer() and not isClient() then return end
 
+    RicksMLC_DrunkHandler = nil
+
     RicksMLC_DrunkHandler = RicksMLC_Drunk:new()
 
     RicksMLC_DrunkHandler.character = getPlayer()
+
+    RicksMLC_DrunkHandler:SetSandboxVars()
+
     RicksMLC_Drunk.StartDrunkHandler()
 end
 
