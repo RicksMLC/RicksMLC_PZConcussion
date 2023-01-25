@@ -1,0 +1,4 @@
+Moodles_EN {
+    Moodles_RicksMLC_Concussion_Bad_lvl1 = "Concussed",
+    Moodles_RicksMLC_Concussion_Bad_desc_lvl1 = "Maybe I need to sit down for a bit",
+}

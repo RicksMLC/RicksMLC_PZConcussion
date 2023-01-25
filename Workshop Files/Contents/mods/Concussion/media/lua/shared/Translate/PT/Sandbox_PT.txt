@@ -1,16 +1,16 @@
 -- Rick's MLC Concussion
 
 Sandbox_PT = {
-    Sandbox_RicksMLC_Concussion = "Concussão MLC de Rick",
+    Sandbox_RicksMLC_Concussion = "Rick's MLC Concussão",
 	
     Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime = "Tempo de efeito de concussão de parede (segundos)",
     Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "Quanto tempo dura o efeito em segundos. Definir para 0 para desativar a concussão na parede.",
 
     Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "Tempo de efeito de concussão de viagem (segundos)",
-    Sandbox_RicksMLC_Concussion_ConcussiontripEffectTime_tooltip = "Quanto tempo dura o efeito em segundos. Definir para 0 para desativar a concussão da viagem sóbria.",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "Quanto tempo dura o efeito em segundos. Definir para 0 para desativar a concussão da viagem sóbria.",
 
     Sandbox_RicksMLC_Concussion_ConcussionTripChance = "Probabilidade de concussão de viagem %",
-    Sandbox_RicksMLC_Concussion_ConcussiontripChance_tooltip = "Oportunidade de ser concussado de uma queda de viagem",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Oportunidade de ser concussado de uma queda de viagem",
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamentos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Ligue/desligue pensamentos quando concussado",
@@ -22,13 +22,16 @@ Sandbox_PT = {
     Sandbox_RicksMLC_Concussion_DrunkThoughts = "Ver pensamentos bêbados",
     Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Ligue/desligue os pensamentos quando estiver bêbado",
 
-
     Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "Base % Hipótese de cambalear",
     Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "Cada minuto no jogo (cerca de 1 segundos em tempo real) tem esta oportunidade base de cambalear (n x nível de embriaguez)",
+	
     Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "Base Stagger (segundos)",
     Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "Duração base do escalonamento em segundos (n x nível de embriaguez)",
 
+	Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "Intervalo de arrefecimento entre escalões",
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "Número de minutos no jogo (cerca de 1 segundo em tempo real) para esperar para verificar se há cambaleia após o último bem sucedido.",
+
     Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % chance de tropeçar",
-    Sandbox_RicksMLC_Concussion_DrunkBseProbTrip_tooltip = "Cada minuto no jogo (cerca de 1 segundos em tempo real) tem esta oportunidade base de tropeçar (n x nível de bêbado)",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "Cada minuto no jogo (cerca de 1 segundos em tempo real) tem esta oportunidade base de tropeçar (n x nível de bêbado)",
 
 }

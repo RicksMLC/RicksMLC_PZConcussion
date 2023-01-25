@@ -450,10 +450,6 @@ function Concussion_Test:Init()
     self.mockPlayer = MockPlayer:new(getPlayer())
     self.wielder = MockWielder:new()
 
-    -- FIXME: Remove:
-    --self:ClearTestResults()
-    --self:CreateWindow()
-
     self.origGetPlayerFn = RicksMLC_Concussion.getPlayer
     RicksMLC_Concussion.getPlayer = Concussion_Test.getPlayer
 
@@ -462,32 +458,6 @@ function Concussion_Test:Init()
 
     self.isReady = true
 end
-
--- function Concussion_Test:CreateWindow()
---     if self.resultsWindow then
---         self.resultsWindow:setObject(self.testResults)
---     else
---         DebugLog.log(DebugType.Mod, "Concussion_Test:CreateWindow()")
---         local x = getPlayerScreenLeft(self.mockPlayer:getPlayerNum())
---         local y = getPlayerScreenTop(self.mockPlayer:getPlayerNum())
---         local w = getPlayerScreenWidth(self.mockPlayer:getPlayerNum())
---         local h = getPlayerScreenHeight(self.mockPlayer:getPlayerNum())
---         self.resultsWindow = _Test_RicksMLC_UI_Window:new(x + 70, y + 50, self.mockPlayer, self.testResults)
---         self.resultsWindow:initialise()
---         self.resultsWindow:addToUIManager()
---         _Test_RicksMLC_UI_Window.windows[self.mockPlayer] = window
---         if self.mockPlayer:getPlayerNum() == 0 then
---             ISLayoutManager.RegisterWindow('Concussion_Test', ISCollapsableWindow, self.resultsWindow)
---         end
---     end
---
---     self.resultsWindow:setVisible(true)
---     self.resultsWindow:addToUIManager()
---     local joypadData = JoypadState.players[self.mockPlayer:getPlayerNum()+1]
---     if joypadData then
---         joypadData.focus = window
---     end
--- end
 
 function Concussion_Test:Teardown()
     DebugLog.log(DebugType.Mod, "Concussion_Test:Teardown()")
@@ -504,20 +474,6 @@ function Concussion_Test.IsTestSave()
 	return saveInfo.saveName and saveInfo.saveName:find("RicksMLC_Test") ~= nil
 end
 
--- function Concussion_Test.Execute()
---     if iTest then 
---         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute(): test already running - abort")
---         return 
---     end
-
---     iTest = Concussion_Test:new()
---     iTest:Init()
---     if iTest.isReady then 
---         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() isReady")
---         iTest:Run()
---         DebugLog.log(DebugType.Mod, "Concussion_Test.Execute() Run complete.")
---     end
--- end
 
 function Concussion_Test:EndTest()
     -- Callback to the harness to let it know we are finished
@@ -550,19 +506,6 @@ function Concussion_Test.OnGameStart()
     iTest.testSuiteId = RicksMLC_TestHarness.Instance():Register(iTest)
 
 end
-
--- function Concussion_Test.HandleOnKeyPressed(key)
--- 	-- Hard coded to F9 for now
--- 	if key == nil then return end
-
--- 	if key == Keyboard.KEY_F9 and Concussion_Test.IsTestSave() then
---         DebugLog.log(DebugLog.Mod, "Concussion_Test.HandleOnKeyPressed() Execute test")
---         Concussion_Test.Execute()
---     end
--- end
-
--- FIXME: Remove
---Events.OnKeyPressed.Add(Concussion_Test.HandleOnKeyPressed)
 
 Events.OnGameStart.Add(Concussion_Test.OnGameStart)
 Events.OnLoad.Add(Concussion_Test.OnLoad)

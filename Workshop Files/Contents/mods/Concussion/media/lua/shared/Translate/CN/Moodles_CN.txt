@@ -1,0 +1,7 @@
+-- Rick's MLC Concussion
+-- Chinese Simplified - UTF-8
+
+Moodles_CN {
+    Moodles_RicksMLC_Concussion_Bad_lvl1 = "脑震荡",
+    Moodles_RicksMLC_Concussion_Bad_desc_lvl1 = "也许我需要坐下来一会儿",
+}

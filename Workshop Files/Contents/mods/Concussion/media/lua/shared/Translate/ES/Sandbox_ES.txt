@@ -7,10 +7,10 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "Cuánto dura el efecto en segundos. Se establece en 0 para deshabilitar la conmoción cerebral de la pared.",
 
     Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "Tiempo de efecto de conmoción cerebral de viaje (segundos)",
-    Sandbox_RicksMLC_Concussion_ConcussiontripEffectTime_tooltip = "Cuánto dura el efecto en segundos. Se establece en 0 para deshabilitar la conmoción cerebral de viaje sobrio.",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "Cuánto dura el efecto en segundos. Se establece en 0 para deshabilitar la conmoción cerebral de viaje sobrio.",
 
     Sandbox_RicksMLC_Concussion_ConcussionTripChance = "% de probabilidad de conmoción cerebral",
-    Sandbox_RicksMLC_Concussion_ConcussiontripChance_tooltip = "Posibilidad de sufrir una conmoción cerebral por una caída de viaje",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Posibilidad de sufrir una conmoción cerebral por una caída de viaje",
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
@@ -24,10 +24,14 @@ Sandbox_ES = {
 
     Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "Base % Posibilidad de tambalearse",
     Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "Cada minuto en el juego (aproximadamente 1 segundo en tiempo real) tiene esta oportunidad básica de tambalearse (n x nivel borracho)",
+	
     Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "Base Stagger (segundos)",
     Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "Duración base del escalonamiento en segundos (n x nivel de borrachera)",
 
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "Intervalo de enfriamiento entre escalonamientos",
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "Número de minutos en el juego (aproximadamente 1 segundo en tiempo real) para esperar para verificar si hay escalonamiento después del último exitoso.",
+
     Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % de probabilidad de tropezar",
-    Sandbox_RicksMLC_Concussion_DrunkBseProbTrip_tooltip = "Cada minuto en el juego (aproximadamente 1 segundo en tiempo real) tiene esta oportunidad básica de tropezar (n x nivel borracho)",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "Cada minuto en el juego (aproximadamente 1 segundo en tiempo real) tiene esta oportunidad básica de tropezar (n x nivel borracho)",
 
 }

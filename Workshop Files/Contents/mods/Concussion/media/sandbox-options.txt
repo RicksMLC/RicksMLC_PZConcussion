@@ -91,7 +91,7 @@ option RicksMLC_Drunk.BaseProbTrip
 {
 	type = integer,
 	default = 20,
-	min = 1,
+	min = 0,
 	max = 100,
 	page = RicksMLC_Concussion,
 	translation = RicksMLC_Concussion_DrunkBaseProbTrip,

@@ -3,7 +3,6 @@
 
 require "ISBaseObject"
 
-
 RicksMLC_TestHarness = ISBaseObject:derive("RicksMLC_TestHarness")
 
 RicksMLC_TestHarnessInstance = nil

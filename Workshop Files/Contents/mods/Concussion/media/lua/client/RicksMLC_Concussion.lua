@@ -10,8 +10,14 @@
 require "ISBaseObject"
 require "RicksMLC_WASDCtrl"
 
-RicksMLC_Concussion = ISBaseObject:derive("RicksMLC_Concussion");
+local RicksMLC_ConcussionMoodle = "RicksMLC_Concussion"
 
+require "MF_ISMoodle"
+if MF then
+    MF.createMoodle(RicksMLC_ConcussionMoodle)
+end
+
+RicksMLC_Concussion = ISBaseObject:derive("RicksMLC_Concussion");
 RicksMLC_ConcussionInstance = nil
 
 function RicksMLC_Concussion:new()
@@ -69,6 +75,10 @@ function RicksMLC_Concussion:Concuss(character, concussTime)
     if self.thoughtsOn then
         self:Think(character, getText("IGUI_RicksMLC_Ow"), 3)
     end
+    if MF then
+        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle)
+        moodle:setValue(0.4)--float 0.4 is default bad level 1.
+    end
     RicksMLC_WASDController:RandomiseWASD()
     self:StartTimer()
 end
@@ -77,6 +87,10 @@ function RicksMLC_Concussion:EndConcussion()
     self:CancelTimer()
     if self.thoughtsOn then
         self:Think(self.character, getText("IGUI_RicksMLC_Better"), 2)
+    end
+    if MF then
+        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle)
+        moodle:setValue(0.5)--float 0.5 is default neutral.
     end
     RicksMLC_WASDController:RestoreWASD()
 end

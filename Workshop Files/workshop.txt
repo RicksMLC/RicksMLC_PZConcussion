@@ -13,6 +13,8 @@ description= Bonus: Drinking alcoholic beverages will now affect when walking, r
 description=
 description= Many thanks to ap0stl30fa1nz for providing feedback and advice for this addition to the mod.
 description=
-description= Languages supported:English and (possibly badly translated): Spanish, Korean, Portuguese
+description= Includes a moodle which will appear if the [url=steamcommunity.com/sharedfiles/filedetails/?id=2859296947] MoodleFramework [/url] mod is installed. 
+description=
+description= Languages supported:English and (possibly badly translated): Spanish, Korean, Portuguese, Simplified Chinese
 tags=Build 41
 visibility=public

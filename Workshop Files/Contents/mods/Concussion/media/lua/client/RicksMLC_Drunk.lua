@@ -94,11 +94,11 @@ function RicksMLC_Drunk:SayDrunkLevel()
     local thoughtColor = PZMath.roundToInt(ZombRand(1, 6))
     local n = PZMath.roundToInt(RicksMLC_Drunk.Random(1, 4))
     if self.drunkLevel >= 4 then
-        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl4[n] .. " " .. tostring(n), thoughtColor)
+        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl4[n], thoughtColor)
         return
     end
     if self.drunkLevel >= 3 then
-        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl3[n] .. " " .. tostring(n), thoughtColor)
+        RicksMLC_Drunk.Think(getPlayer(), ScriptLvl3[n] , thoughtColor)
         return
     end
     if self.drunkLevel >= 2 then
