@@ -16,7 +16,7 @@
 --          [-] Walking/standing still has a standing fall backwards
 --      [?] Trip in random forward direction
 require "ISBaseObject"
-require "ISEatFoodAction"
+require "TimedActions/ISEatFoodAction"
 
 RicksMLC_Drunk = ISBaseObject:derive("RicksMLC_Drunk");
 

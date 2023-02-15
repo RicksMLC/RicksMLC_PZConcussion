@@ -10,9 +10,9 @@
 require "ISBaseObject"
 require "RicksMLC_WASDCtrl"
 
-local RicksMLC_ConcussionMoodle = "RicksMLC_Concussion"
-
 require "MF_ISMoodle"
+
+local RicksMLC_ConcussionMoodle = "RicksMLC_Concussion"
 if MF then
     MF.createMoodle(RicksMLC_ConcussionMoodle)
 end
@@ -193,7 +193,7 @@ function RicksMLC_Concussion.OnGameStart()
 
     -- Single player isClient == false
     -- Multiplayer isClient == true
-    if not isClient() then 
+    if isClient() then 
         Events.OnWeaponHitCharacter.Add(RicksMLC_Concussion.OnWeaponHitCharacter)
     end
 
