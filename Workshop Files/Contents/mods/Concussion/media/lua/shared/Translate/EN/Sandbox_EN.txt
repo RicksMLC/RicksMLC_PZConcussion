@@ -31,4 +31,18 @@ Sandbox_EN = {
     Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % chance to trip",
     Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "Each in-game minute (about 1 seconds real time) has this base chance to trip (n x drunk level)",
 
+    Sandbox_RicksMLC_Concussion_EarDamageEnable = "Firearms damage hearing",
+    Sandbox_RicksMLC_Concussion_EarDamageEnable_tooltip = "Turn this on to experience ear damage using firearms (whee)",
+
+    Sandbox_RicksMLC_Concussion_EarDamageVolumeThreshold = "Sound Volume Threshold",
+    Sandbox_RicksMLC_Concussion_EarDamageVolumeThreshold_tooltip = "Sounds above this volume trigger deaf check",
+
+    Sandbox_RicksMLC_Concussion_EarDamageTimespanThresholdSeconds = "Sound Period (seconds)",
+    Sandbox_RicksMLC_Concussion_EarDamageTimespanThresholdSeconds_tooltip = "Number of seconds the sound volume is accumulated for deaf check",
+
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTriggerVolume = "Deaf Trigger Sum Volume",
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTriggerVolume_tooltip = "Deafness is triggered if the sum of the sounds exceeds this amount over the Sound Period. Note the sound volume is amplified by echo inside buildings.",
+
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTime = "Temporary deafness effect (seconds)",
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTime_tooltip = "How long the temporary deafness lasts in real seconds",
 }

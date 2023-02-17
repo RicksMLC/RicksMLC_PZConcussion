@@ -97,5 +97,50 @@ option RicksMLC_Drunk.BaseProbTrip
 	translation = RicksMLC_Concussion_DrunkBaseProbTrip,
 }
 
+option RicksMLC_EarDamage.Enable
+{
+	type = boolean,
+	default = false,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_EarDamageEnable,
+}
 
+option RicksMLC_EarDamage.VolumeThreshold
+{
+	type = integer,
+	default = 50,
+	min = 1,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_EarDamageVolumeThreshold,
+}
 
+option RicksMLC_EarDamage.TimespanThresholdSeconds
+{
+	type = integer,
+	default = 3,
+	min = 1,
+	max = 10,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_EarDamageTimespanThresholdSeconds,
+}
+
+option RicksMLC_EarDamage.DeafTriggerVolume
+{
+	type = integer,
+	default = 2900,
+	min = 100,
+	max = 20000,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_EarDamageDeafTriggerVolume,
+}
+
+option RicksMLC_EarDamage.DeafTime
+{
+	type = integer,
+	default = 10,
+	min=0,
+	max=60,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_EarDamageDeafTime,
+}

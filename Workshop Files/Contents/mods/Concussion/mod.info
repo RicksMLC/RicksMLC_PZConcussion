@@ -14,5 +14,7 @@ description=Many thanks to apOstl3Ofa1nz for providing feedback and advice for t
 description=<LINE>
 description=Includes a moodle, which will appear if the MoodleFramework mod is installed. <LINE>
 description=<LINE>
+description=Survivor can experience deafness for a short time when things get really loud.  Disabled by default.  Enable with Ricks's MLC Concussion -> "Firearms damage hearing" sandbox option. <LINE>
+description=<LINE>
 description=Languages supported:English and (possibly badly translated): Spanish, Korean, Portuguese, Simplified Chinese
 url=
