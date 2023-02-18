@@ -96,13 +96,16 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound()")
     if getPlayer():HasTrait("Deaf") then return end
 
-    if RicksMLC_WPHS.IsWearingHearingProtection() then
-        --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound(): Ear Protection on = no damage")
-        return
-    end
+    if not instanceof(objSource, 'IsoPlayer') then  return end
 
     local volumeWithGain = RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
     if volumeWithGain >= volumeThreshold then
+
+        if RicksMLC_WPHS.IsWearingHearingProtection() then
+            --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound(): Ear Protection on = no damage")
+            return
+        end
+    
         local currentEarDamage = getPlayer():getModData()[RicksMLC_EarDamageModKey]
         if not currentEarDamage then
             getPlayer():getModData()[RicksMLC_EarDamageModKey] 
