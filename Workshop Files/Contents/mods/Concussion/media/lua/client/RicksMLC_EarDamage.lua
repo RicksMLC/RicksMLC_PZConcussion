@@ -1,12 +1,16 @@
 -- RicksMLC_EarDamage.lua
 --
--- Inflict the "Deaf" trait for a period of time if the player has made too much noise
+-- Inflict the "Deaf" trait for a period of time if the player has made too much noise.
+-- https://projectzomboid.com/modding////zombie/characters/IsoPlayer.html
+-- https://projectzomboid.com/modding////zombie/Lua/LuaManager.GlobalObject.html#getGameTime()
+--
 -- TODO:
 --      [+] Handle the OnWorldSound() to set a start timer for the sound, and the volume
 --      [+] On each shot within a timespan, increase the damage til the threshold is reached.
 --      [+] Apply the "Deaf" trait on threshold reached.
---      [ ] Deaf time increases while shooting and not deaf.
 --      [+] Detect wearing ear protection to prevent damage
+--      [ ] Deaf time increases depending on deaf history - the more often it happens the longer the effect
+--      [ ] Permanent hearing loss after so many events?
 
 require "ISBaseObject"
 require "MF_ISMoodle"
@@ -24,6 +28,7 @@ local deafTriggerVolume = 3000
 RicksMLC_EarDamage = ISBaseObject:derive("RicksMLC_EarDamage")
 
 local RicksMLC_EarDamageModKey = "RicksMLC_EarDamage"
+--local RicksMLC_EarDamageRecord = "RicksMLC_EarDamageRecord"
 
 local RicksMLC_EarDamageInstance = nil
 function RicksMLC_EarDamage.Instance() 
@@ -53,8 +58,10 @@ function RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
         local isOutside = getPlayer():isOutside()
         if not isOutside then
             local playerRoomDef = getPlayer():getCurrentRoomDef()
-            roomArea = math.min(playerRoomDef:getArea(), math.pi * radius * radius)
-            volumeWithGain = volume * math.log(roomArea)
+            if playerRoomDef then
+                roomArea = math.min(playerRoomDef:getArea(), math.pi * radius * radius)
+                volumeWithGain = volume * math.log(roomArea)
+            end
             --RicksMLC_EarDamage.Dump(roomArea, radius, volumeWithGain)
         end
         return volumeWithGain
@@ -183,6 +190,16 @@ function RicksMLC_EarDamage:StartDeafness(currentEarDamage)
     Events.OnWorldSound.Remove(RicksMLC_EarDamage.OnWorldSound)
 
     local deafTime = SandboxVars.RicksMLC_EarDamage.DeafTime
+
+    -- TODO: Make deafness more permanent if it happens too often
+    --player:getModData()[RicksMLC_EarDamageRecord]["numDeafEvents"] { numDeafEvents = 0, dateTimeLastEvent = 0 }
+    -- player:getModData()[RicksMLC_EarDamageRecord]["numDeafEvents"] 
+    --     = player:getModData()[RicksMLC_EarDamageRecord]["numDeafEvents"] + 1
+
+    -- player:getModData()[RicksMLC_EarDamageRecord]["dateTimeLastEvent"] 
+    --     = getGameTime():getCalendar():getTime() -- getTime() returns a java dateTime instance
+        
+
     self:SetEffectTime(deafTime)
 
     self:ApplyDeafTraits()
@@ -261,6 +278,12 @@ function RicksMLC_EarDamage.OnCreatePlayer(playerIndex, player)
     -- FIXME: How to handle multiplayer?
 
     local instance = RicksMLC_EarDamage.Instance()
+
+    -- local earDamageRecord = player:getModData()[RicksMLC_EarDamageRecord]
+    -- if not earDamageRecord then
+    --     -- This is a new player
+    --     player:getModData()[RicksMLC_EarDamageRecord] = { numDeafEvents = 0, dateTimeLastEvent = 0 }
+    -- end
 
     local currentEarDamage = player:getModData()[RicksMLC_EarDamageModKey]
     if not currentEarDamage and player:HasTrait("Deaf") then

@@ -1,9 +1,9 @@
 -- Rick's MLC Concussion
 -- TODO:
 --      [+] Handle concussin trigger: https://pzwiki.net/wiki/Modding:Lua_Events/OnAIStateChange
---      [?] Effects: blurry vision, pain, queasy, head injury, sleepy
 --      [+] Disorientation: randomise the WASD keys
 --      [-] multiplayer
+--      [!] Effects: blurry vision, pain, queasy, head injury, sleepy
 --
 -- Note: https://pzwiki.net/wiki/Category:Lua_Events
 
