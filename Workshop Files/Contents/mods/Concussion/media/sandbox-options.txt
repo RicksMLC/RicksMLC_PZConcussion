@@ -100,7 +100,7 @@ option RicksMLC_Drunk.BaseProbTrip
 option RicksMLC_EarDamage.Enable
 {
 	type = boolean,
-	default = false,
+	default = true,
 	page = RicksMLC_Concussion,
 	translation = RicksMLC_Concussion_EarDamageEnable,
 }
