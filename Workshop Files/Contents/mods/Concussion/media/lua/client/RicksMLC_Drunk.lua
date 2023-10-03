@@ -131,6 +131,9 @@ end
 function RicksMLC_Drunk:TripPlayer()
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:TripPlayer()")
     
+    --FIXME: Uncomment to fix the trip when sobered up while sitting
+    if self.character:isSitOnGround() then return end -- No tripping if sitting.
+
     -- BumpTypes: "stagger", "trippingFromSprint",  "left", "right"
     -- BumpFallTypes: "pushedBehind", "pushedFront". "pushedFront" means "fall backwards" ie: pushed from the front.
     if self.character:isSprinting() then
