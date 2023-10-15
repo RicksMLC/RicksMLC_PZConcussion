@@ -13,6 +13,9 @@ Sandbox_EN = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "See Thoughts",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
 
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Accidental Discharge",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Getting concussion while a firearm equipped will fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action. Base chance to shoot yourself: 60%.  Unlucky: 90%.  Lucky has 10% chance to shoot yourself, but 90% chance to shoot the nearest zombie.",
+
     Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",
 

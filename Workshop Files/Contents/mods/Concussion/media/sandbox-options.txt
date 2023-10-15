@@ -38,6 +38,13 @@ option RicksMLC_Concussion.TripChance
 	translation = RicksMLC_Concussion_ConcussionTripChance,
 }
 
+option RicksMLC_Concussion.AccidentalDischarge
+{
+	type = boolean,
+	default = true,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_AccidentalDischarge,
+}
 
 option RicksMLC_Drunk.EffectOn
 {

@@ -15,6 +15,8 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
 	
+	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Accidental",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Sufrir una conmoción cerebral mientras se equipa un arma de fuego disparará el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción. Probabilidad base de dispararse a sí mismo: 60%.  Mala suerte: 90%.  Lucky tiene un 10% de probabilidad de dispararse a sí mismo, pero un 90% de probabilidad de disparar al zombi más cercano.",
 
 	Sandbox_RicksMLC_Concussion_DrunkOn = "El alcohol afecta el movimiento",
 	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Encienda / apague los tropiezos y / o caídas debido al nivel de moodle borracho",

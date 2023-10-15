@@ -66,9 +66,70 @@ function RicksMLC_Concussion:Think(player, thought, colourNum)
     --player:setHaloNote(thought, r[colourNum], g[colourNum], b[colourNum], 150)
 end
 
+function RicksMLC_Concussion:AccidentalDischarge(character)
+    if character ~= getPlayer() then return end
+    local weapon = character:getPrimaryHandItem()
+    if not weapon or not instanceof(weapon, "HandWeapon") or not weapon:isRanged() then return end
+
+    --ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
+    if ISReloadWeaponAction.canShoot(weapon) then
+        local radius = weapon:getSoundRadius();
+        if isClient() then -- limit sound radius in MP
+            radius = radius / 1.8
+        end
+        character:addWorldSoundUnlessInvisible(radius, weapon:getSoundVolume(), false);
+        character:playSound(weapon:getSwingSound());
+        character:startMuzzleFlash()
+        if weapon:haveChamber() then
+            weapon:setRoundChambered(false)
+        end
+
+        ISReloadWeaponAction.onShoot(character, weapon) -- Handles the weapon discharge ammunition
+
+        -- Probability to hit:
+        --  Base chance is 60% with 20% chance of hitting a zombie
+        --  Unlucky is 90%
+        --  Lucky is 10% with 90% chance of hitting a zombie
+        local baseChance = 60
+        local zombieChance = 20
+        if character:HasTrait("Lucky") then
+            baseChance = 10
+            zombieChance = 90
+        elseif character:HasTrait("Unlucky") then
+            baseChance = 90
+            zombieChance = 10
+        end
+        local n = ZombRand(100)
+        if n <= baseChance then
+            -- Shot yourself
+            character:Hit(weapon, character, 0, false, 0)
+        else
+            local z = ZombRand(100)
+            if z <= zombieChance then
+                -- Shoot a zombie
+                local zombie = getCell():getNearestVisibleZombie(character:getPlayerNum())
+                if zombie then
+                    local distance = IsoUtils.DistanceToSquared(zombie:getX(), zombie:getY(), zombie:getZ(),
+                                                                character:getX(), character:getY(), character:getZ())
+                    if distance <= (weapon:getMaxRange() * weapon:getMaxRange()) then
+                        zombie:Hit(weapon, character, 0, false, 0)
+                        zombie:knockDown(false)
+                    end
+                end
+            end
+        end
+    else
+        character:playSound(weapon:getClickSound())
+    end
+end
+
 function RicksMLC_Concussion:Concuss(character, concussTime)
     --DebugLog.log("RicksMLC_Concussion:Concuss()")
     if concussTime == 0 then return end
+
+    if SandboxVars.RicksMLC_Concussion.AccidentalDischarge then
+        self:AccidentalDischarge(character)
+    end
 
     self:SetEffectTime(concussTime)
     self.character = character
@@ -106,6 +167,8 @@ end
 function RicksMLC_Concussion:HandleOnAIStateChange(character, newState, oldState)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnAIStateChange()")
 
+    if character:isGodMod() then return end
+
     if oldState and newState then
         local oldStateName = character:getPreviousStateName()
         local newStateName = character:getCurrentStateName()
@@ -140,6 +203,7 @@ function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, hand
     -- Duration of concussion is strength level + 1
     
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion:HandleOnWeaponHitCharacter()")
+    if character:isInvincible() then return end
 
     if not handWeapon then return end
 

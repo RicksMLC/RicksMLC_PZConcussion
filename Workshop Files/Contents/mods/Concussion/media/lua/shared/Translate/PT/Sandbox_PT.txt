@@ -15,6 +15,9 @@ Sandbox_PT = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamentos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Ligue/desligue pensamentos quando concussado",
 
+	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Acidental",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Obter concussão enquanto uma arma de fogo equipada irá disparar a arma.  É possível atirar-se desta forma.  Lucky/Unlucky aplicar a esta ação. Chance base de atirar em si mesmo: 60%.  Azar: 90%.  Lucky tem 10% de chance de atirar em si mesmo, mas 90% de chance de atirar no zumbi mais próximo."
+
 
     Sandbox_RicksMLC_Concussion_DrunkOn = "O álcool afeta o movimento",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Ligar/desligar tropeçar e/ou cair devido ao nível de moodle embriagado",
