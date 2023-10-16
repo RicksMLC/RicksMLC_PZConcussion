@@ -71,6 +71,10 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
     local weapon = character:getPrimaryHandItem()
     if not weapon or not instanceof(weapon, "HandWeapon") or not weapon:isRanged() then return end
 
+    local ad = ZombRand(100)
+    local chance = SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance
+    if ad > chance then return end
+
     --ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
     if ISReloadWeaponAction.canShoot(weapon) then
         local radius = weapon:getSoundRadius();
@@ -88,16 +92,16 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
 
         -- Probability to hit:
         --  Base chance is 60% with 20% chance of hitting a zombie
-        --  Unlucky is 90%
-        --  Lucky is 10% with 90% chance of hitting a zombie
-        local baseChance = 60
-        local zombieChance = 20
+        --  Unlucky is 85% shoot self, with 10% shoot zombie
+        --  Lucky is 10% self, with 90% chance of hitting a zombie
+        local baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfBaseChance
+        local zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieChance
         if character:HasTrait("Lucky") then
-            baseChance = 10
-            zombieChance = 90
+            baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfLuckyChance
+            zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieLuckyChance
         elseif character:HasTrait("Unlucky") then
-            baseChance = 90
-            zombieChance = 10
+            baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfUnluckyChance
+            zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieUnluckyChance
         end
         local n = ZombRand(100)
         if n <= baseChance then

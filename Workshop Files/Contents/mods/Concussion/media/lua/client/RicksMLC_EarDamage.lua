@@ -101,9 +101,11 @@ end
 
 function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource) 
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound()")
+    if getPlayer():isInvincible() or getPlayer():isGodMod() then return end
+
     if getPlayer():HasTrait("Deaf") then return end
 
-    if not instanceof(objSource, 'IsoPlayer') then  return end
+    if not instanceof(objSource, 'IsoPlayer') then return end
 
     local volumeWithGain = RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
     if volumeWithGain >= volumeThreshold then

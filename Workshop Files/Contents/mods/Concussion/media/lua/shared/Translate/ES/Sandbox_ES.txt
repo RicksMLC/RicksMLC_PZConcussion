@@ -16,7 +16,30 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
 	
 	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Accidental",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Sufrir una conmoción cerebral mientras se equipa un arma de fuego disparará el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción. Probabilidad base de dispararse a sí mismo: 60%.  Mala suerte: 90%.  Lucky tiene un 10% de probabilidad de dispararse a sí mismo, pero un 90% de probabilidad de disparar al zombi más cercano.",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Sufrir una conmoción cerebral mientras se equipa un arma de fuego disparará el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción.",
+	
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Probabilidad de descarga",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidad de que un arma de fuego equipada se dispare en caso de conmoción cerebral",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Disparar a la propia probabilidad de base",
+    Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% de probabilidad base de dispararse a sí mismo",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance = "Dispara a ti mismo la mala suerte",
+    Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance_tooltip = "% de probabilidad de dispararte si tienes mala suerte",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance = "Shoot self lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance_tooltip = "Dispara a la suerte de uno mismo",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieChance = "Disparar a la probabilidad base de zombis",
+    Sandbox_RicksMLC_Concussion_ShootZombieChance_tooltip = "% de probabilidad base de disparar a un zombi si no te disparas a ti mismo primero",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance = "Dispara a los zombies de mala suerte",
+    Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "% de probabilidad de disparar a un zombi si tienes mala suerte y no te disparas primero",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% chance to shoot a zombie if you are lucky and don't shoot yourself first",
+	
+	
 
 	Sandbox_RicksMLC_Concussion_DrunkOn = "El alcohol afecta el movimiento",
 	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Encienda / apague los tropiezos y / o caídas debido al nivel de moodle borracho",

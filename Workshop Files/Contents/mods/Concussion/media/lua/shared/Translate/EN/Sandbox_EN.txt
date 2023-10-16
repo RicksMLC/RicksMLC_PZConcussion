@@ -14,7 +14,28 @@ Sandbox_EN = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
 
     Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Accidental Discharge",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Getting concussion while a firearm equipped will fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action. Base chance to shoot yourself: 60%.  Unlucky: 90%.  Lucky has 10% chance to shoot yourself, but 90% chance to shoot the nearest zombie.",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Getting concussion while a firearm is equipped will fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action.",
+
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Discharge Chance",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% chance for an equipped firearm to discharge on concussion",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Shoot self base chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% base chance to shoot yourself",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance = "Shoot self unlucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance_tooltip = "% chance to shoot yourself if you are unlucky",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance = "Shoot self lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance_tooltip = "% chance to shoot yourself if you are lucky",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieChance = "Shoot zombie base chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieChance_tooltip = "% base chance to shoot a zombie if you don't shoot yourself first",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance = "Shoot zombie unlucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "% chance to shoot a zombie if you are unlucky and don't shoot yourself first",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% chance to shoot a zombie if you are lucky and don't shoot yourself first",
 
     Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",

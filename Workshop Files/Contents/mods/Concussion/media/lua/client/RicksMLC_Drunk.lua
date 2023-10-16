@@ -212,6 +212,12 @@ end
 function RicksMLC_Drunk:HandleEveryOneMinute()
     local drunkMoodleLevel = getPlayer():getMoodles():getMoodleLevel(MoodleType.Drunk)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:HandleEveryOneMinute() drunkLevel:" .. tostring(self.drunkLevel))
+
+    if getPlayer():isInvincible() or getPlayer():isGodMod() then
+        self:StopDrunkHandler()
+        return
+    end
+
     -- Wait 2 minutes before turning off, to give the "eat" action time to start the effect
     if drunkMoodleLevel < 1 and self.drunkCheckNum > 2 then
         self.drunkLevel = drunkMoodleLevel

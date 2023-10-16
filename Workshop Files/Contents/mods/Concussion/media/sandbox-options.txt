@@ -46,6 +46,76 @@ option RicksMLC_Concussion.AccidentalDischarge
 	translation = RicksMLC_Concussion_AccidentalDischarge,
 }
 
+option RicksMLC_Concussion.AccidentalDischargeChance
+{
+	type = integer,
+	default = 80,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_AccidentalDischargeChance,
+}
+
+option RicksMLC_Concussion.ShootSelfBaseChance
+{
+	type = integer,
+	default = 60,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootSelfBaseChance,
+}
+
+option RicksMLC_Concussion.ShootSelfUnluckyChance
+{
+	type = integer,
+	default = 80,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootSelfUnluckyChance,
+}
+
+option RicksMLC_Concussion.ShootSelfLuckyChance
+{
+	type = integer,
+	default = 5,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootSelfLuckyChance,
+}
+
+option RicksMLC_Concussion.ShootZombieChance
+{
+	type = integer,
+	default = 20,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootZombieChance,
+}
+
+option RicksMLC_Concussion.ShootZombieUnluckyChance
+{
+	type = integer,
+	default = 10,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootZombieUnluckyChance,
+}
+
+option RicksMLC_Concussion.ShootZombieLuckyChance
+{
+	type = integer,
+	default = 85,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ShootZombieLuckyChance,
+}
+
 option RicksMLC_Drunk.EffectOn
 {
 	type = boolean,
