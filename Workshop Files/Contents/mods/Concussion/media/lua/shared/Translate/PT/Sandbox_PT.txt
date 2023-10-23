@@ -16,10 +16,10 @@ Sandbox_PT = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Ligue/desligue pensamentos quando concussado",
 
 	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Acidental",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Obter concussão enquanto uma arma de fogo está equipada irá disparar a arma.  É possível atirar-se desta forma.  Lucky/Unlucky aplicar a esta ação.",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Cair enquanto uma arma de fogo está equipada pode disparar a arma.  É possível atirar-se desta forma.  Lucky/Unlucky aplicar a esta ação.",
 
 	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Chance de descarga",
-    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidade de uma arma de fogo equipada ser descarregada em caso de concussão",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidade de uma arma de fogo equipada descarregar em caso de queda",
 
 	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Atire a chance de auto-base",
     Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% de chance básica de atirar em si mesmo",
@@ -39,6 +39,8 @@ Sandbox_PT = {
 	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Atire zumbi chance de sorte",
     Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% de chance de atirar em um zumbi se você tiver sorte e não atirar em si mesmo primeiro",
 
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "% chance de corrimento causa surdez",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "Surdez e tiro e desorientação?  Isso está ficando muito hardcore agora...  Defina como 0 para desativar.",
 
     Sandbox_RicksMLC_Concussion_DrunkOn = "O álcool afeta o movimento",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Ligar/desligar tropeçar e/ou cair devido ao nível de moodle embriagado",

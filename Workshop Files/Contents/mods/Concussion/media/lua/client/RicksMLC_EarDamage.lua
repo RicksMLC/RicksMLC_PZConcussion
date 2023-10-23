@@ -47,6 +47,8 @@ function RicksMLC_EarDamage:new()
     o.isTimerOn = false
     o.elapsedTime = -1
     o.timerEndSeconds = 0
+    o.deafnessStarted = false
+    o.transitionToDeafTime = 0.32
 
     return o
 end
@@ -182,6 +184,19 @@ function RicksMLC_EarDamage:SetEffectTime(timeInSeconds)
     self.timerEndSeconds = timeInSeconds
 end
 
+function RicksMLC_EarDamage:StartImmediateDeafness()
+    -- Starts deafness immediately regardless of the current ear damage.
+    -- An example is when a gun is fired close to the head, so noise level is not a factor
+    local currentEarDamage = getPlayer():getModData()[RicksMLC_EarDamageModKey]
+    if not currentEarDamage then
+        getPlayer():getModData()[RicksMLC_EarDamageModKey] 
+            = { firstTimeStamp = getTimestamp(), totalVolume = volumeWithGain }
+    end
+    local currentEarDamage = getPlayer():getModData()[RicksMLC_EarDamageModKey]
+    currentEarDamage["totalVolume"] = deafTriggerVolume + 1-- force the deafness
+    self:StartDeafness(currentEarDamage)
+end
+
 function RicksMLC_EarDamage:StartDeafness(currentEarDamage)
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:StartDeafness()")
 
@@ -201,11 +216,8 @@ function RicksMLC_EarDamage:StartDeafness(currentEarDamage)
     -- player:getModData()[RicksMLC_EarDamageRecord]["dateTimeLastEvent"] 
     --     = getGameTime():getCalendar():getTime() -- getTime() returns a java dateTime instance
         
-
     self:SetEffectTime(deafTime)
-
-    self:ApplyDeafTraits()
-
+    getPlayer():playSound("GoDeaf")
     if MF and getPlayer() then
         local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle)
         moodle:setValue(0.0)
@@ -221,6 +233,7 @@ function RicksMLC_EarDamage:EndDeafness()
     self:CancelTimer()
     self:RestoreTraits()
     RicksMLC_EarDamage.ClearMoodles()
+    self.deafnessStarted = false
     Events.OnWorldSound.Add(RicksMLC_EarDamage.OnWorldSound)
 end
 
@@ -245,7 +258,12 @@ function RicksMLC_EarDamage:HandleUpdateTimer()
 
 	if self.elapsedTime >= self.timerEndSeconds then
         self:EndDeafness()
+        return
 	end
+    if self.elapsedTime >= self.transitionToDeafTime and not self.deafnessStarted then
+        self.deafnessStarted = true
+        self:ApplyDeafTraits()
+    end
 end
 
 function RicksMLC_EarDamage:CancelTimer()

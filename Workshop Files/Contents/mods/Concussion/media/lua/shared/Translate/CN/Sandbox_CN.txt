@@ -17,10 +17,10 @@ Sandbox_CN = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "脑震荡时打开/关闭想法",
 
 	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "意外放电",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "装备枪支时发生脑震荡将发射武器。 可以这样射击自己。 幸运/不幸适用于此操作。",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "在装备枪支时摔倒可能会发射武器。 可以这样射击自己。 幸运/不幸适用于此操作。",
 
 	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "放电几率",
-    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "装备枪械在脑震荡时放电的几率%",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "装备齐全的枪支在坠落时放电的几率%",
 
 	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "射击自我基础机会",
     Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "射击自己的基本几率百分比",
@@ -40,6 +40,9 @@ Sandbox_CN = {
 	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "射击僵尸幸运机会",
     Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "如果你幸运的话，有%的机会射杀僵尸，不要先开枪自杀",
 	
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "%几率出院导致耳聋",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "耳聋以及中弹和迷失方向？ 现在这变得非常硬核... 设置为 0 表示禁用。",
+
     Sandbox_RicksMLC_Concussion_DrunkOn = "酒精影响运动",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "打开/关闭由于醉酒情绪水平而绊倒和/或跌倒",
 

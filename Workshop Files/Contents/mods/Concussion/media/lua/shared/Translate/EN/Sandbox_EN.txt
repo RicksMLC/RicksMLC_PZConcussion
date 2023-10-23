@@ -14,10 +14,10 @@ Sandbox_EN = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
 
     Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Accidental Discharge",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Getting concussion while a firearm is equipped will fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action.",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Falling down while a firearm is equipped may fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action.",
 
 	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Discharge Chance",
-    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% chance for an equipped firearm to discharge on concussion",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% chance for an equipped firearm to discharge on fall",
 
 	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Shoot self base chance",
     Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% base chance to shoot yourself",
@@ -36,6 +36,9 @@ Sandbox_EN = {
 
 	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
     Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% chance to shoot a zombie if you are lucky and don't shoot yourself first",
+
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "% chance discharge causes deafness",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "Deafness as well as shot and disorientated?  This is getting really hardcore now...  Set to 0 to disable.",
 
     Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
     Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",

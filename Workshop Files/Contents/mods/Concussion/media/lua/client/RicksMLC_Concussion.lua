@@ -9,6 +9,8 @@
 
 require "ISBaseObject"
 require "RicksMLC_WASDCtrl"
+require "RicksMLC_WPHS"
+require "RicksMLC_EarDamage"
 
 require "MF_ISMoodle"
 
@@ -71,11 +73,10 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
     local weapon = character:getPrimaryHandItem()
     if not weapon or not instanceof(weapon, "HandWeapon") or not weapon:isRanged() then return end
 
-    local ad = ZombRand(100)
-    local chance = SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance
-    if ad > chance then return end
+    local chance = ZombRand(100)
+    if chance > SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance then return end
 
-    --ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
+    --Copied from ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
     if ISReloadWeaponAction.canShoot(weapon) then
         local radius = weapon:getSoundRadius();
         if isClient() then -- limit sound radius in MP
@@ -89,6 +90,11 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
         end
 
         ISReloadWeaponAction.onShoot(character, weapon) -- Handles the weapon discharge ammunition
+
+        chance = ZombRand(100)
+        if chance <= SandboxVars.RicksMLC_Concussion.AccidentalDischargeDeafnessChance and not RicksMLC_WPHS.IsWearingHearingProtection() then
+            RicksMLC_EarDamage.Instance():StartImmediateDeafness()
+        end
 
         -- Probability to hit:
         --  Base chance is 60% with 20% chance of hitting a zombie
@@ -130,10 +136,6 @@ end
 function RicksMLC_Concussion:Concuss(character, concussTime)
     --DebugLog.log("RicksMLC_Concussion:Concuss()")
     if concussTime == 0 then return end
-
-    if SandboxVars.RicksMLC_Concussion.AccidentalDischarge then
-        self:AccidentalDischarge(character)
-    end
 
     self:SetEffectTime(concussTime)
     self.character = character
@@ -178,9 +180,15 @@ function RicksMLC_Concussion:HandleOnAIStateChange(character, newState, oldState
         local newStateName = character:getCurrentStateName()
         if newStateName ==  "PlayerGetUpState" then
             if oldStateName == "CollideWithWallState" then
+                if SandboxVars.RicksMLC_Concussion.AccidentalDischarge then
+                    self:AccidentalDischarge(character)
+                end
                 self:Concuss(character, RicksMLC_Concussion.GetBaseWallEffectTime())
             elseif oldStateName == "BumpedState" and not RicksMLC_Drunk.IsDrunk() then
                 -- "BumpedState" is when drunk or trip while sprinting.  Ignore drunk trips - they are controlled in RicksMLC_Drunk.
+                if SandboxVars.RicksMLC_Concussion.AccidentalDischarge then
+                    self:AccidentalDischarge(character)
+                end
                 local chance = RicksMLC_Concussion.Random(1, 100)
                 if chance <= SandboxVars.RicksMLC_Concussion.TripChance then
                     self:Concuss(character, RicksMLC_Concussion.GetBaseTripEffectTime())

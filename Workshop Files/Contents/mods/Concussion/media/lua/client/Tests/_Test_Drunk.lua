@@ -55,4 +55,4 @@ function Drunk_Test.OnGameStart()
 
 end
 
-Events.OnGameStart.Add(Concussion_Test.OnGameStart)
+Events.OnGameStart.Add(Drunk_Test.OnGameStart)

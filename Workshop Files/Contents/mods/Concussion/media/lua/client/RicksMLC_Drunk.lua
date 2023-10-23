@@ -153,6 +153,8 @@ function RicksMLC_Drunk:TripPlayer()
     end
 	self.character:setVariable("BumpDone", false);
 	self.character:setVariable("BumpFall", true);
+    -- Falling over while drunk and carrying a loaded firearm may be hazardous to your health.
+    RicksMLC_Concussion.Instance():AccidentalDischarge(self.character)
     self:StartCooldown()
 end
 
@@ -213,7 +215,8 @@ function RicksMLC_Drunk:HandleEveryOneMinute()
     local drunkMoodleLevel = getPlayer():getMoodles():getMoodleLevel(MoodleType.Drunk)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:HandleEveryOneMinute() drunkLevel:" .. tostring(self.drunkLevel))
 
-    if getPlayer():isInvincible() or getPlayer():isGodMod() then
+    if getPlayer():isGodMod() then
+        self.drunkLevel = 0
         self:StopDrunkHandler()
         return
     end
@@ -318,7 +321,7 @@ function ISEatFoodAction:perform()
 
     origISEatFoodActionPerform(self)
 
-    if not SandboxVars.RicksMLC_Drunk.EffectOn then return end
+    if not SandboxVars.RicksMLC_Drunk.EffectOn or getPlayer():isGodMod() then return end
 
     if self.item:isAlcoholic() then
         RicksMLC_Drunk.StartDrunkHandler()
@@ -336,7 +339,7 @@ function RicksMLC_Drunk.InitPlayer()
 
     if not SandboxVars.RicksMLC_Drunk.EffectOn then return end
 
-    if isServer() and not isClient() then return end
+    if isServer() and not isClient() then return end -- If this is a dedicated server just return as nothing to do.
 
     RicksMLC_DrunkHandler = nil
 

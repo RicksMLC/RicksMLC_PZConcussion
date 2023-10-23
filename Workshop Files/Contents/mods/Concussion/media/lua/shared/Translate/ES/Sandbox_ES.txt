@@ -16,10 +16,10 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
 	
 	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Accidental",
-    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Sufrir una conmoción cerebral mientras se equipa un arma de fuego disparará el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción.",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Caerse mientras un arma de fuego está equipada puede disparar el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción.",
 	
 	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Probabilidad de descarga",
-    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidad de que un arma de fuego equipada se dispare en caso de conmoción cerebral",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidad de que un arma de fuego equipada se descargue al caer.",
 
 	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Disparar a la propia probabilidad de base",
     Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% de probabilidad base de dispararse a sí mismo",
@@ -37,9 +37,10 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "% de probabilidad de disparar a un zombi si tienes mala suerte y no te disparas primero",
 
 	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
-    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% chance to shoot a zombie if you are lucky and don't shoot yourself first",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% de probabilidad de disparar a una zombi si tienes suerte y no te disparas primero",
 	
-	
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "% de probabilidad de que la secreción cause sordera",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "¿Sordera y disparado y desorientado?  Esto se está poniendo muy duro ahora...  Establézcalo en 0 para deshabilitarlo.",
 
 	Sandbox_RicksMLC_Concussion_DrunkOn = "El alcohol afecta el movimiento",
 	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Encienda / apague los tropiezos y / o caídas debido al nivel de moodle borracho",

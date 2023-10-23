@@ -116,6 +116,17 @@ option RicksMLC_Concussion.ShootZombieLuckyChance
 	translation = RicksMLC_Concussion_ShootZombieLuckyChance,
 }
 
+option RicksMLC_Concussion.AccidentalDischargeDeafnessChance
+{
+	type = integer,
+	default = 45,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_AccidentalDischargeDeafnessChance,
+}
+
+
 option RicksMLC_Drunk.EffectOn
 {
 	type = boolean,
