@@ -323,7 +323,7 @@ function ISEatFoodAction:perform()
 
     if not SandboxVars.RicksMLC_Drunk.EffectOn or getPlayer():isGodMod() then return end
 
-    if self.item:isAlcoholic() then
+    if self.item and self.item:isAlcoholic() then
         RicksMLC_Drunk.StartDrunkHandler()
     end
 end

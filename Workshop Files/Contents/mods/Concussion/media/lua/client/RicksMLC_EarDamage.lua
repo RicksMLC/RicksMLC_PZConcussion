@@ -107,7 +107,13 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
 
     if getPlayer():HasTrait("Deaf") then return end
 
-    if not instanceof(objSource, 'IsoPlayer') then return end
+    if not instanceof(objSource, "IsoPlayer") then return end
+
+    -- -- FIXME: Possible fix for Scent of Blood: Check if the objSource has a firearm (handweapon?) equipped
+    -- local item = objSource:getPrimaryHandItem() 
+    -- if not instanceof(item, "HandWeapon") then 
+    --     return
+    -- end
 
     local volumeWithGain = RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
     if volumeWithGain >= volumeThreshold then
