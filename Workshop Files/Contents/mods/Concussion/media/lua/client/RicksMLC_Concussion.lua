@@ -143,7 +143,7 @@ function RicksMLC_Concussion:Concuss(character, concussTime)
         self:Think(character, getText("IGUI_RicksMLC_Ow"), 3)
     end
     if MF then
-        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle)
+        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle, getPlayer():getPlayerNum())
         moodle:setValue(0.4)--float 0.4 is default bad level 1.
     end
     RicksMLC_WASDController:RandomiseWASD()
@@ -156,7 +156,7 @@ function RicksMLC_Concussion:EndConcussion()
         self:Think(self.character, getText("IGUI_RicksMLC_Better"), 2)
     end
     if MF then
-        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle)
+        local moodle = MF.getMoodle(RicksMLC_ConcussionMoodle, getPlayer():getPlayerNum())
         moodle:setValue(0.5)--float 0.5 is default neutral.
     end
     RicksMLC_WASDController:RestoreWASD()

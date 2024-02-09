@@ -159,7 +159,7 @@ end
 function RicksMLC_EarDamage.ClearMoodles()
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.ClearMoodles()")
     if MF and getPlayer() then
-        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle)
+        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle, getPlayer():getPlayerNum())
         moodle:setValue(0.5)--float 0.4 is default bad level 1.
         moodle:setChevronCount(0)--unsigned int
     end
@@ -179,7 +179,7 @@ function RicksMLC_EarDamage:ShowDeafWarning(experiencedVolume)
 
         if badness > 0.4 then return end
         local chevronLevel = PZMath.roundToInt(5 * volRatio)
-        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle)
+        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle, getPlayer():getPlayerNum())
         moodle:setValue(badness)--float 0.4 is default bad level 1.
         moodle:setChevronCount(chevronLevel)--unsigned int
         moodle:setChevronIsUp(true)--bool
@@ -225,7 +225,7 @@ function RicksMLC_EarDamage:StartDeafness(currentEarDamage)
     self:SetEffectTime(deafTime)
     getPlayer():playSound("GoDeaf")
     if MF and getPlayer() then
-        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle)
+        local moodle = MF.getMoodle(RicksMLC_EarDamageMoodle, getPlayer():getPlayerNum())
         moodle:setValue(0.0)
         moodle:setChevronCount(0)
     end
