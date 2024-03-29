@@ -42,6 +42,10 @@ function RicksMLC_Concussion.Instance()
     return RicksMLC_ConcussionInstance
 end
 
+function RicksMLC_Concussion:IsConcussed(player)
+    return self.character == player and self.isTimerOn 
+end
+
 function RicksMLC_Concussion:SetEffectTime(timeInSeconds)
     self.timerEndSeconds = timeInSeconds
 end
@@ -236,6 +240,29 @@ function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, hand
     self:Concuss(character, strengthLevel + 1)
 end
 
+function RicksMLC_Concussion:TripPlayer()
+    if RicksMLC_Concussion.Random(1, 100) >= 50 then
+        self.character:setBumpType("left")
+    else
+        self.character:setBumpType("right")
+    end
+    self.character:setVariable("BumpFallType", "pushedFront"); -- "pushedBehind", "pushedFront",
+    self.character:setVariable("BumpDone", false);
+    self.character:setVariable("BumpFall", true);
+    -- Falling over with concussion and carrying a loaded firearm may be hazardous to your health.
+    RicksMLC_Concussion.Instance():AccidentalDischarge(self.character)
+end
+
+function RicksMLC_Concussion:HandleOnExitVehicle(character)
+    if character ~= getPlayer() and not self:IsConcussed() then return end
+
+    local n = RicksMLC_Concussion.Random(1, 100)
+    if n > SandboxVars.RicksMLC_Concussion.CarCrashTripChance then return end
+
+    self:TripPlayer()
+end
+
+
 function RicksMLC_Concussion.OnAIStateChange(character, newState, oldState)
     -- Make sure this event is for the player, otherwise on multiplayer everyone gets concussed
     if character ~= RicksMLC_Concussion.getPlayer() or isServer() then return end
@@ -260,6 +287,18 @@ function RicksMLC_Concussion.OnWeaponHitCharacter(wielder, character, handWeapon
     end
 end
 
+function RicksMLC_Concussion.OnPlayerGetDamage(character, damageType, amount)
+    if character ~= getPlayer() then return end
+    if damageType ~= "CARCRASHDAMAGE" then return end
+
+    if amount < SandboxVars.RicksMLC_Concussion.CarCrashDamageThreshold then return end
+    RicksMLC_Concussion:Instance():Concuss(character, SandboxVars.RicksMLC_Concussion.CarCrashEffectTimeSeconds)
+    RicksMLC_Concussion:Instance():AccidentalDischarge(character)
+end
+
+function RicksMLC_Concussion.OnExitVehicle(character)
+    RicksMLC_Concussion:Instance():HandleOnExitVehicle(character)
+end
 
 function RicksMLC_Concussion.OnGameStart()
     --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.GameStart()")
@@ -271,6 +310,10 @@ function RicksMLC_Concussion.OnGameStart()
     -- Multiplayer isClient == true
     if isClient() then 
         Events.OnWeaponHitCharacter.Add(RicksMLC_Concussion.OnWeaponHitCharacter)
+    end
+
+    if SandboxVars.RicksMLC_Concussion.CarCrashEffectTimeSeconds > 0 then
+        Events.OnPlayerGetDamage.Add(RicksMLC_Concussion.OnPlayerGetDamage)
     end
 
     RicksMLC_ConcussionInstance = RicksMLC_Concussion:new()
@@ -292,6 +335,7 @@ end
 
 function RicksMLC_Concussion:CancelTimer()
     Events.OnTick.Remove(RicksMLC_Concussion.UpdateTimer)
+    Events.OnExitVehicle.Remove(RicksMLC_Concussion.OnExitVehicle)
     self.isTimerOn = false
     self:SetEffectTime(0)
 end
@@ -301,6 +345,7 @@ function RicksMLC_Concussion:StartTimer()
 		self.isTimerOn = true
 		self.elapsedTime = 0
 		Events.OnTick.Add(RicksMLC_Concussion.UpdateTimer)
+        Events.OnExitVehicle.Add(RicksMLC_Concussion.OnExitVehicle)
 	end
 end
 

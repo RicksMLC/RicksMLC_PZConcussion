@@ -12,6 +12,16 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ConcussionTripChance = "% de probabilidad de conmoción cerebral",
     Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Posibilidad de sufrir una conmoción cerebral por una caída de viaje",
 
+	Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "Oportunidad de viaje en coche de salida",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "Posibilidad de que tropiece si sale de un vehículo mientras sufre una conmoción cerebral: buena suerte para salir de este.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "Tiempo de efecto de conmoción cerebral por accidente automovilístico (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "Cuánto dura el efecto de la conmoción cerebral en segundos. Establézcalo en 0 para desactivar la conmoción cerebral por accidente automovilístico.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Umbral de conmoción cerebral por accidente automovilístico",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Conmoción cerebral si el daño del accidente automovilístico aplicado es > esto.  Tenga en cuenta que incluso un pequeño golpe puede registrar una pequeña cantidad de daño, por lo que establecerlo en 0 probablemente lo convertirá en un conductor seguro debido al refuerzo negativo de experiencia.",
+
+
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
 	

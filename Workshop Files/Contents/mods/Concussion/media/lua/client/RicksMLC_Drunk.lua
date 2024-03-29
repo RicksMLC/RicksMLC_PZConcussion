@@ -297,8 +297,8 @@ function RicksMLC_Drunk.IsDrunk()
     return drunkLvl >= 1
 end
 
-function RicksMLC_Drunk:HandleOnExitVehicle()
-    if not RicksMLC_Drunk.IsDrunk() then return end
+function RicksMLC_Drunk:HandleOnExitVehicle(character)
+    if character ~= getPlayer() or not RicksMLC_Drunk.IsDrunk() then return end
 
     local trip = RicksMLC_Drunk.Random(1, 100)
     self.chanceToTrip = self:GetChanceToTrip()
@@ -330,8 +330,8 @@ end
 
 ---------------------------------------------------------------------------------
 
-function RicksMLC_Drunk.OnExitVehicle()
-    RicksMLC_DrunkHandler:HandleOnExitVehicle()
+function RicksMLC_Drunk.OnExitVehicle(character)
+    RicksMLC_DrunkHandler:HandleOnExitVehicle(character)
 end
 
 function RicksMLC_Drunk.InitPlayer()

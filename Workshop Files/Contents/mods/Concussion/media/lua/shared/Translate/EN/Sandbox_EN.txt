@@ -10,6 +10,15 @@ Sandbox_EN = {
     Sandbox_RicksMLC_Concussion_ConcussionTripChance = "Trip Concussion Probability %",
     Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Chance to be concussed from a trip fall",
 
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "Trip on exit car chance",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "Chance you will trip if you exit a vehicle while concussed - good luck getting out of this one.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "Car Crash Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "How long the concussion effect lasts in seconds. Set to 0 to disable car crash concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Car Crash Concussion Threshold",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Concussion if the applied car crash damage is > this.  Note that even a small bump can register a tiny amount of damage, so setting to 0 will probably make you a safe driver due to -ve experience reinforcement.",
+
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "See Thoughts",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
 

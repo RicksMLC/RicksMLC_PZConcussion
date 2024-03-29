@@ -12,6 +12,15 @@ Sandbox_PT = {
     Sandbox_RicksMLC_Concussion_ConcussionTripChance = "Probabilidade de concussão de viagem %",
     Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Oportunidade de ser concussado de uma queda de viagem",
 
+	Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "Viagem na chance de carro de saída",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "Chance você vai tropeçar se você sair de um veículo enquanto concussed - boa sorte saindo deste.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "Tempo de efeito de concussão de colisão de carro (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "How long the concussion effect lasts in seconds. Set to 0 to disable car crash concussion. Quanto tempo dura o efeito de concussão em segundos. Defina como 0 para desativar a concussão de acidente de carro.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Limiar de Concussão de Colisão de Carro",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Concussão se o dano de acidente de carro aplicado é > isso.  Note que mesmo um pequeno solavanco pode registrar uma pequena quantidade de danos, portanto, definir como 0 provavelmente fará de você um motorista seguro devido ao reforço da experiência negativa.",
+
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamentos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Ligue/desligue pensamentos quando concussado",
 
