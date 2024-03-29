@@ -60,6 +60,12 @@ function RicksMLC_WPHS.IsWearingHearingProtection()
         if necklace and necklace:getType():find("Hat_EarMuff_Protectors") ~= nil  then return true end
     end
 
+    -- Compatibility for MufflesEarsSlot
+    if getActivatedMods():contains("MufflesEarsSlot") then 
+        local ears = getPlayer():getWornItem("Ears")
+        if ears and ears:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
+    end
+
     return false
 end
 
