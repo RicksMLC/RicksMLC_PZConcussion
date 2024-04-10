@@ -22,6 +22,8 @@ Sandbox_CN = {
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "车祸脑震荡阈值",
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "如果施加的车祸损坏>此，则脑震荡。 请注意，即使是很小的颠簸也会造成轻微的伤害，因此由于负面经验强化，设置为 0 可能会使您成为安全的驾驶员。",
 
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "车祸脑震荡概率 %",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = "当损伤高于阈值时发生脑震荡的概率。",
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "查看想法",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "脑震荡时打开/关闭想法",

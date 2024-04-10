@@ -254,10 +254,12 @@ function RicksMLC_Concussion:TripPlayer()
 end
 
 function RicksMLC_Concussion:HandleOnExitVehicle(character)
-    if character ~= getPlayer() and not self:IsConcussed() then return end
-
+    if character ~= getPlayer() or not self:IsConcussed() then return end
+    -- RicksMLC_Drunk also has HandleOnVechicleExit. To avoid doing it twice Drunk will not trip on exit when also concussed
+    -- and it is handled here instead:
+    local drunkTripChance = RicksMLC_Drunk:Instance():GetChanceToTrip()
     local n = RicksMLC_Concussion.Random(1, 100)
-    if n > SandboxVars.RicksMLC_Concussion.CarCrashTripChance then return end
+    if n > SandboxVars.RicksMLC_Concussion.CarCrashTripChance and n > drunkTripChance then return end
 
     self:TripPlayer()
 end
@@ -292,6 +294,9 @@ function RicksMLC_Concussion.OnPlayerGetDamage(character, damageType, amount)
     if damageType ~= "CARCRASHDAMAGE" then return end
 
     if amount < SandboxVars.RicksMLC_Concussion.CarCrashDamageThreshold then return end
+
+    if RicksMLC_Concussion.Random(1, 100) > SandboxVars.RicksMLC_Concussion.CarCrashConcussionChance then return end
+
     RicksMLC_Concussion:Instance():Concuss(character, SandboxVars.RicksMLC_Concussion.CarCrashEffectTimeSeconds)
     RicksMLC_Concussion:Instance():AccidentalDischarge(character)
 end

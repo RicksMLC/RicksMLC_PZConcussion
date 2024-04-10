@@ -31,7 +31,7 @@ option RicksMLC_Concussion.TripEffectTimeSeconds
 option RicksMLC_Concussion.CarCrashEffectTimeSeconds
 {
 	type = integer,
-	default = 0,
+	default = 10,
 	min = 0,
 	max = 30,
 	page = RicksMLC_Concussion,
@@ -41,17 +41,27 @@ option RicksMLC_Concussion.CarCrashEffectTimeSeconds
 option RicksMLC_Concussion.CarCrashDamageThreshold
 {
 	type = integer,
-	default = 15,
+	default = 12,
 	min = 1,
 	max = 200,
 	page = RicksMLC_Concussion,
 	translation = RicksMLC_Concussion_ConcussionCarCrashDamageThreshold,
 }
 
-option RicksMLC_Concussion.CarCrashTripChance
+option RicksMLC_Concussion.CarCrashConcussionChance
 {
 	type = integer,
 	default = 40,
+	min = 0,
+	max = 100,
+	page = RicksMLC_Concussion,
+	translation = RicksMLC_Concussion_ConcussionCarCrashConcussionChance,
+}
+
+option RicksMLC_Concussion.CarCrashTripChance
+{
+	type = integer,
+	default = 30,
 	min = 0,
 	max = 100,
 	page = RicksMLC_Concussion,

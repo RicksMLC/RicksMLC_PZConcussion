@@ -298,7 +298,8 @@ function RicksMLC_Drunk.IsDrunk()
 end
 
 function RicksMLC_Drunk:HandleOnExitVehicle(character)
-    if character ~= getPlayer() or not RicksMLC_Drunk.IsDrunk() then return end
+    -- Drunk and Concussion both can trip on exit - let Concussion handle the case where the player is drunk and concussed.
+    if character ~= getPlayer() or not RicksMLC_Drunk.IsDrunk() or RicksMLC_Concussion:Instance():IsConcussed() then return end
 
     local trip = RicksMLC_Drunk.Random(1, 100)
     self.chanceToTrip = self:GetChanceToTrip()

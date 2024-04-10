@@ -21,6 +21,9 @@ Sandbox_PT = {
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Limiar de Concussão de Colisão de Carro",
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Concussão se o dano de acidente de carro aplicado é > isso.  Note que mesmo um pequeno solavanco pode registrar uma pequena quantidade de danos, portanto, definir como 0 provavelmente fará de você um motorista seguro devido ao reforço da experiência negativa.",
 
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "Probabilidade de Concussão de Acidente de Carro %",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = "Probabilidade de ter uma concussão quando o dano está acima do limiar.",
+
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamentos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Ligue/desligue pensamentos quando concussado",
 

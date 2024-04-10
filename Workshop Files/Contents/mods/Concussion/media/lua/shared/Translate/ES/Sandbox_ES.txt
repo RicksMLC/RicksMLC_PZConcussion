@@ -21,6 +21,9 @@ Sandbox_ES = {
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Umbral de conmoción cerebral por accidente automovilístico",
     Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Conmoción cerebral si el daño del accidente automovilístico aplicado es > esto.  Tenga en cuenta que incluso un pequeño golpe puede registrar una pequeña cantidad de daño, por lo que establecerlo en 0 probablemente lo convertirá en un conductor seguro debido al refuerzo negativo de experiencia.",
 
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "% de probabilidad de conmoción cerebral por accidente automovilístico",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = Probabilidad de sufrir una conmoción cerebral cuando el daño está por encima del umbral.",
+
 
     Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
     Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
