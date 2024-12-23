@@ -1,0 +1,87 @@
+Sandbox_EN = {
+    Sandbox_RicksMLC_Concussion = "Rick's MLC Concussion",
+
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime = "Wall Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "How long the effect lasts in seconds. Set to 0 to disable wall concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "Trip Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "How long the effect lasts in seconds. Set to 0 to disable sober trip concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance = "Trip Concussion Probability %",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Chance to be concussed from a trip fall",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "Trip on exit car chance",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "Chance you will trip if you exit a vehicle while concussed - good luck getting out of this one.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "Car Crash Concussion Effect Time (seconds)",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "How long the concussion effect lasts in seconds. Set to 0 to disable car crash concussion.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Car Crash Concussion Threshold",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Concussion if the applied car crash damage is > this.  Note that even a small bump can register a tiny amount of damage, so setting to 0 will probably make you a safe driver due to -ve experience reinforcement.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "Car Crash Concussion Probability %",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = "Probability to get a concussion when the damage is above the threshold.",
+
+    Sandbox_RicksMLC_Concussion_ThoughtsOn = "See Thoughts",
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Turn on/off thoughts when concussed",
+
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Accidental Discharge",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Falling down while a firearm is equipped may fire the weapon.  It is possible to shoot yourself this way.  Lucky/Unlucky apply to this action.",
+
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Discharge Chance",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% chance for an equipped firearm to discharge on fall",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Shoot self base chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% base chance to shoot yourself",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance = "Shoot self unlucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance_tooltip = "% chance to shoot yourself if you are unlucky",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance = "Shoot self lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance_tooltip = "% chance to shoot yourself if you are lucky",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieChance = "Shoot zombie base chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieChance_tooltip = "% base chance to shoot a zombie if you don't shoot yourself first",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance = "Shoot zombie unlucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "% chance to shoot a zombie if you are unlucky and don't shoot yourself first",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% chance to shoot a zombie if you are lucky and don't shoot yourself first",
+
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "% chance discharge causes deafness",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "Deafness as well as shot and disorientated?  This is getting really hardcore now...  Set to 0 to disable.",
+
+    Sandbox_RicksMLC_Concussion_DrunkOn = "Alcohol affects movement",
+    Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Turn on/off stumbling and/or falling due to drunk moodle level",
+
+    Sandbox_RicksMLC_Concussion_DrunkThoughts = "See drunk thoughts",
+    Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Turn on/off thoughts when drunk",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "Base % Chance to stagger",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "Each in-game minute (about 1 seconds real time) has this base chance to stagger (n x drunk level)",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "Base Stagger (seconds)",
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "Base duration of the stagger in seconds (n x drunk level)",
+
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "Cooldown interval between staggers",
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "Number of in-game minutes (about 1 second real time) to wait to check for stagger after the last successful one.",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % chance to trip",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "Each in-game minute (about 1 seconds real time) has this base chance to trip (n x drunk level)",
+
+    Sandbox_RicksMLC_Concussion_EarDamageEnable = "Firearms damage hearing",
+    Sandbox_RicksMLC_Concussion_EarDamageEnable_tooltip = "Turn this on to experience ear damage using firearms (whee)",
+
+    Sandbox_RicksMLC_Concussion_EarDamageVolumeThreshold = "Sound Volume Threshold",
+    Sandbox_RicksMLC_Concussion_EarDamageVolumeThreshold_tooltip = "Sounds above this volume trigger deaf check",
+
+    Sandbox_RicksMLC_Concussion_EarDamageTimespanThresholdSeconds = "Sound Period (seconds)",
+    Sandbox_RicksMLC_Concussion_EarDamageTimespanThresholdSeconds_tooltip = "Number of seconds the sound volume is accumulated for deaf check",
+
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTriggerVolume = "Deaf Trigger Sum Volume",
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTriggerVolume_tooltip = "Deafness is triggered if the sum of the sounds exceeds this amount over the Sound Period. Note the sound volume is amplified by echo inside buildings.",
+
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTime = "Temporary deafness effect (seconds)",
+    Sandbox_RicksMLC_Concussion_EarDamageDeafTime_tooltip = "How long the temporary deafness lasts in real seconds",
+}

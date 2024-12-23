@@ -1,0 +1,76 @@
+-- Rick's MLC Concussion
+-- Chinese Simplified Translation - UTF-8
+
+Sandbox_CN = {
+    Sandbox_RicksMLC_Concussion = "Rick's MLC 震荡",
+
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime = "壁震荡效果时间（秒）",
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "效果持续多长时间（以秒为单位）。设置为 0 可禁用墙壁震荡。",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "跳闸脑震荡效果时间（秒）",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "效果持续多长时间（以秒为单位）。设置为 0 可禁用清醒行程脑震荡。",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance = "跳闸脑震荡概率 %",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "跌倒后脑震荡的机会",
+
+	Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "下车机会",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "如果你在脑震荡时下车，你可能会绊倒 - 祝你好运。",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "车祸脑震荡效果时间（秒）",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "脑震荡效应持续多长时间（以秒为单位）。设置为 0 可禁用车祸脑震荡。",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "车祸脑震荡阈值",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "如果施加的车祸损坏>此，则脑震荡。 请注意，即使是很小的颠簸也会造成轻微的伤害，因此由于负面经验强化，设置为 0 可能会使您成为安全的驾驶员。",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "车祸脑震荡概率 %",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = "当损伤高于阈值时发生脑震荡的概率。",
+
+    Sandbox_RicksMLC_Concussion_ThoughtsOn = "查看想法",
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "脑震荡时打开/关闭想法",
+
+	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "意外放电",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "在装备枪支时摔倒可能会发射武器。 可以这样射击自己。 幸运/不幸适用于此操作。",
+
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "放电几率",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "装备齐全的枪支在坠落时放电的几率%",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "射击自我基础机会",
+    Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "射击自己的基本几率百分比",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance = "射杀自己倒霉的机会",
+    Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance_tooltip = "如果你运气不好，有%的机会开枪自杀",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance = "射出自吉祥的机会",
+    Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance_tooltip = "如果幸运的话，有%的机会开枪自杀",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieChance = "射击僵尸基地几率",
+    Sandbox_RicksMLC_Concussion_ShootZombieChance_tooltip = "射击僵尸的基本几率百分比，如果你不先射击自己",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance = "射击僵尸倒霉的机会",
+    Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "如果你运气不好，不要先开枪，射击僵尸的几率",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "射击僵尸幸运机会",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "如果你幸运的话，有%的机会射杀僵尸，不要先开枪自杀",
+	
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "%几率出院导致耳聋",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "耳聋以及中弹和迷失方向？ 现在这变得非常硬核... 设置为 0 表示禁用。",
+
+    Sandbox_RicksMLC_Concussion_DrunkOn = "酒精影响运动",
+    Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "打开/关闭由于醉酒情绪水平而绊倒和/或跌倒",
+
+	Sandbox_RicksMLC_Concussion_DrunkThoughts = "看到醉酒的想法",
+	Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "醉酒时打开/关闭想法",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "错开的基本几率百分比",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "游戏中的每一分钟（实时约1秒）都有这个基本机会错开（n x醉酒水平）",
+	
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "基础交错（秒）",
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "交错的基本持续时间（以秒为单位）（n x 醉酒级别）",
+	
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "交错之间的冷却间隔",
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "在最后一次成功后等待检查错开的游戏内分钟数（大约 1 秒实时）。",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "绊倒的基本几率百分比",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "游戏中的每一分钟（实时约1秒）都有这个基本机会被绊倒（n x醉酒水平）",
+
+}

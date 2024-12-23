@@ -1,0 +1,15 @@
+Moodles_EN {
+    Moodles_RicksMLC_Concussion_Bad_lvl1 = "Concussed",
+    Moodles_RicksMLC_Concussion_Bad_desc_lvl1 = "Maybe I need to sit down for a bit",
+
+    Moodles_RicksMLC_EarDamage_Bad_lvl1 = "That was loud",
+    Moodles_RicksMLC_EarDamage_Bad_desc_lvl1 = "Hearing damage may occur",
+    Moodles_RicksMLC_EarDamage_Bad_lvl2 = "That was Louder",
+    Moodles_RicksMLC_EarDamage_Bad_desc_lvl2 = "Better quiet things down",
+    Moodles_RicksMLC_EarDamage_Bad_lvl3 = "That was EVEN LOUDER",
+    Moodles_RicksMLC_EarDamage_Bad_desc_lvl3 = "WHAT?",
+    Moodles_RicksMLC_EarDamage_Bad_lvl4 = "SO MUCH NOISE",
+    Moodles_RicksMLC_EarDamage_Bad_desc_lvl4 = "I CAN'T HEAR MYSELF THINK!",
+    Moodles_RicksMLC_EarDamage_Bad_lvl5 = "Deaf... very quiet now",
+    Moodles_RicksMLC_EarDamage_Bad_desc_lvl5 = "This will clear up soon",
+}

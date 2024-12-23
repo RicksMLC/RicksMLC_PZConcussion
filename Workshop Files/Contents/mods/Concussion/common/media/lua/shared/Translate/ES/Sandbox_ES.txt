@@ -1,0 +1,76 @@
+-- Rick's MLC Concussion
+
+Sandbox_ES = {
+    Sandbox_RicksMLC_Concussion = "Rick's MLC Conmoción",
+
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime = "Tiempo de efecto de conmoción cerebral de la pared (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionWallEffectTime_tooltip = "Cuánto dura el efecto en segundos. Se establece en 0 para deshabilitar la conmoción cerebral de la pared.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime = "Tiempo de efecto de conmoción cerebral de viaje (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionTripEffectTime_tooltip = "Cuánto dura el efecto en segundos. Se establece en 0 para deshabilitar la conmoción cerebral de viaje sobrio.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance = "% de probabilidad de conmoción cerebral",
+    Sandbox_RicksMLC_Concussion_ConcussionTripChance_tooltip = "Posibilidad de sufrir una conmoción cerebral por una caída de viaje",
+
+	Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance = "Oportunidad de viaje en coche de salida",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashTripChance_tooltip = "Posibilidad de que tropiece si sale de un vehículo mientras sufre una conmoción cerebral: buena suerte para salir de este.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds = "Tiempo de efecto de conmoción cerebral por accidente automovilístico (segundos)",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashEffectTimeSeconds_tooltip = "Cuánto dura el efecto de la conmoción cerebral en segundos. Establézcalo en 0 para desactivar la conmoción cerebral por accidente automovilístico.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold = "Umbral de conmoción cerebral por accidente automovilístico",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashDamageThreshold_tooltip = "Conmoción cerebral si el daño del accidente automovilístico aplicado es > esto.  Tenga en cuenta que incluso un pequeño golpe puede registrar una pequeña cantidad de daño, por lo que establecerlo en 0 probablemente lo convertirá en un conductor seguro debido al refuerzo negativo de experiencia.",
+
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance = "% de probabilidad de conmoción cerebral por accidente automovilístico",
+    Sandbox_RicksMLC_Concussion_ConcussionCarCrashConcussionChance_tooltip = Probabilidad de sufrir una conmoción cerebral cuando el daño está por encima del umbral.",
+
+
+    Sandbox_RicksMLC_Concussion_ThoughtsOn = "Ver Pensamientos",
+    Sandbox_RicksMLC_Concussion_ThoughtsOn_tooltip = "Activar / desactivar los pensamientos cuando se produce una conmoción cerebral",
+	
+	Sandbox_RicksMLC_Concussion_AccidentalDischarge = "Descarga Accidental",
+    Sandbox_RicksMLC_Concussion_AccidentalDischarge_tooltip = "Caerse mientras un arma de fuego está equipada puede disparar el arma.  Es posible dispararse de esta manera.  Suerte/Dessuerte se aplican a esta acción.",
+	
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeChance = "Probabilidad de descarga",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeChance_tooltip = "% de probabilidad de que un arma de fuego equipada se descargue al caer.",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfBaseChance = "Disparar a la propia probabilidad de base",
+    Sandbox_RicksMLC_Concussion_ShootSelfBaseChance_tooltip = "% de probabilidad base de dispararse a sí mismo",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance = "Dispara a ti mismo la mala suerte",
+    Sandbox_RicksMLC_Concussion_ShootSelfUnluckyChance_tooltip = "% de probabilidad de dispararte si tienes mala suerte",
+
+	Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance = "Shoot self lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootSelfLuckyChance_tooltip = "Dispara a la suerte de uno mismo",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieChance = "Disparar a la probabilidad base de zombis",
+    Sandbox_RicksMLC_Concussion_ShootZombieChance_tooltip = "% de probabilidad base de disparar a un zombi si no te disparas a ti mismo primero",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance = "Dispara a los zombies de mala suerte",
+    Sandbox_RicksMLC_Concussion_ShootZombieUnluckyChance_tooltip = "% de probabilidad de disparar a un zombi si tienes mala suerte y no te disparas primero",
+
+	Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance = "Shoot zombie lucky chance",
+    Sandbox_RicksMLC_Concussion_ShootZombieLuckyChance_tooltip = "% de probabilidad de disparar a una zombi si tienes suerte y no te disparas primero",
+	
+	Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance = "% de probabilidad de que la secreción cause sordera",
+    Sandbox_RicksMLC_Concussion_AccidentalDischargeDeafnessChance_tooltip = "¿Sordera y disparado y desorientado?  Esto se está poniendo muy duro ahora...  Establézcalo en 0 para deshabilitarlo.",
+
+	Sandbox_RicksMLC_Concussion_DrunkOn = "El alcohol afecta el movimiento",
+	Sandbox_RicksMLC_Concussion_DrunkOn_tooltip = "Encienda / apague los tropiezos y / o caídas debido al nivel de moodle borracho",
+	
+	Sandbox_RicksMLC_Concussion_DrunkThoughts = "Ver pensamientos borrachos",
+	Sandbox_RicksMLC_Concussion_DrunkThoughts_tooltip = "Encender / apagar los pensamientos cuando está borracho",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger = "Base % Posibilidad de tambalearse",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbStagger_tooltip = "Cada minuto en el juego (aproximadamente 1 segundo en tiempo real) tiene esta oportunidad básica de tambalearse (n x nivel borracho)",
+	
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger = "Base Stagger (segundos)",
+    Sandbox_RicksMLC_Concussion_DrunkBaseTimeStagger_tooltip = "Duración base del escalonamiento en segundos (n x nivel de borrachera)",
+
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown = "Intervalo de enfriamiento entre escalonamientos",
+    Sandbox_RicksMLC_Concussion_DrunkStaggerCooldown_tooltip = "Número de minutos en el juego (aproximadamente 1 segundo en tiempo real) para esperar para verificar si hay escalonamiento después del último exitoso.",
+
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip = "Base % de probabilidad de tropezar",
+    Sandbox_RicksMLC_Concussion_DrunkBaseProbTrip_tooltip = "Cada minuto en el juego (aproximadamente 1 segundo en tiempo real) tiene esta oportunidad básica de tropezar (n x nivel borracho)",
+
+}

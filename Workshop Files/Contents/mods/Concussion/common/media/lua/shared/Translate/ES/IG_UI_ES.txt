@@ -1,0 +1,6 @@
+-- Rick's MLC Grass Cutting With Tool Mod
+
+IGUI_ES {
+	IGUI_RicksMLC_Ow = "¡Ow! ¡Mi cabeza!",
+	IGUI_RicksMLC_Better = "Eso está mejor",
+},

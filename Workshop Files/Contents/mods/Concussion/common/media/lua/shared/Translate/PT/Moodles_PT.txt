@@ -1,0 +1,6 @@
+-- Rick's MLC Concussion
+
+Moodles_PT {
+    Moodles_RicksMLC_Concussion_Bad_lvl1 = "Concussado",
+    Moodles_RicksMLC_Concussion_Bad_desc_lvl1 = "Talvez precise de me sentar um pouco.",
+}
