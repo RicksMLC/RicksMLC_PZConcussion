@@ -318,31 +318,35 @@ end
 -------------------------------------------------------------------------------
 -- Override:
 
-function RicksMLC_Drunk.HandleISActionPerform(self)
+function RicksMLC_Drunk.HandleISActionComplete(self)
     if not SandboxVars.RicksMLC_Drunk.EffectOn or getPlayer():isGodMod() then return end
 
-    if self.item and self.item:isAlcoholic() then
+    -- item:isAlcoholic() returns false for most liquids, so just check if the player is drunk
+    local stats = getPlayer():getStats()
+    local drunkenness = stats:getDrunkenness()
+
+    if drunkenness > 0 then
         RicksMLC_Drunk.StartDrunkHandler()
     end    
 end
 
-local origDrinkFluidActionPerform = ISDrinkFluidAction.perform
-function ISDrinkFluidAction:perform()
+local origDrinkFluidActionComplete = ISDrinkFluidAction.complete
+function ISDrinkFluidAction:complete()
 
-    DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISDrinkFluidAction:perform")
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISDrinkFluidAction:complete")
 
-    origDrinkFluidActionPerform(self)
-    RicksMLC_Drunk.HandleISActionPerform(self)
+    origDrinkFluidActionComplete(self)
+    RicksMLC_Drunk.HandleISActionComplete(self)
 end
 
 -- B42.01 Box wine uses the ISEatFoodAction for some reason
-local origISEatFoodActionPerform = ISEatFoodAction.perform
-function ISEatFoodAction:perform()
+local origISEatFoodActionComplete = ISEatFoodAction.complete
+function ISEatFoodAction:complete()
 
-    DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISEatFoodAction:perform")
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISEatFoodAction:complete")
 
-    origISEatFoodActionPerform(self)
-    RicksMLC_Drunk.HandleISActionPerform(self)
+    origISEatFoodActionComplete(self)
+    RicksMLC_Drunk.HandleISActionComplete(self)
 end
 
 ---------------------------------------------------------------------------------
