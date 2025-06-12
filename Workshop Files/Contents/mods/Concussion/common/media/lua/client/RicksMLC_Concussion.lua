@@ -81,7 +81,7 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
     if chance > SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance then return end
 
     --Copied from ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
-    if ISReloadWeaponAction.canShoot(weapon) then
+    if ISReloadWeaponAction.canShoot(character, weapon) then
         local radius = weapon:getSoundRadius();
         if isClient() then -- limit sound radius in MP
             radius = radius / 1.8
