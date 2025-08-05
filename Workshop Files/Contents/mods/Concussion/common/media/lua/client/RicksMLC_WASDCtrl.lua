@@ -22,12 +22,22 @@ function RicksMLC_WASDCtrl:new()
     return o
 end
 
-function RicksMLC_WASDCtrl:SwapLeftRight()
-    getCore():addKeyBinding("Right", self.origLeft)
-    getCore():addKeyBinding("Left", self.origRight)
-    self.isLeftRightSwapped = true
+-- B42.11: The key binding now has shift/ctrl/alt to handle
+-- knownKeys[name].key = keyBind
+-- knownKeys[name].altCode = altCode;
+-- knownKeys[name].shift = shift;
+-- knownKeys[name].ctrl = ctrl;
+-- knownKeys[name].alt = alt;
+-- getCore():addKeyBinding(name, keyBind, altCode, shift, ctrl, alt)
+function RicksMLC_WASDCtrl:addKeyBinding(name, keyBind)
+    getCore():addKeyBinding(name, keyBind, 0, false, false, false)
 end
 
+function RicksMLC_WASDCtrl:SwapLeftRight()
+    self:addKeyBinding("Right", self.origLeft)
+    self:addKeyBinding("Left", self.origRight)
+    self.isLeftRightSwapped = true
+end
 
 function RicksMLC_WASDCtrl:RandomiseWASD()
     local keyBinds = {"Forward", "Backward", "Left", "Right"}
@@ -37,21 +47,21 @@ function RicksMLC_WASDCtrl:RandomiseWASD()
     newBinds[3] = {4,1,2,3}
     newBinds[4] = {2,4,1,3}
     local n = ZombRand(1, 4)
-    getCore():addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
-    getCore():addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
-    getCore():addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
-    getCore():addKeyBinding(keyBinds[newBinds[n][4]], self.origRight)
+    self:addKeyBinding(keyBinds[newBinds[n][1]], self.origForward)
+    self:addKeyBinding(keyBinds[newBinds[n][2]], self.origBackward)
+    self:addKeyBinding(keyBinds[newBinds[n][3]], self.origLeft)
+    self:addKeyBinding(keyBinds[newBinds[n][4]], self.origRight)
     self.isRandomised = true
 end
 
 function RicksMLC_WASDCtrl:RestoreWASD()
     if self.isRandomised or self.isLeftRightSwapped then
-        getCore():addKeyBinding("Left", self.origLeft)
-        getCore():addKeyBinding("Right", self.origRight)
+        self:addKeyBinding("Left", self.origLeft)
+        self:addKeyBinding("Right", self.origRight)
     end
     if self.isRandomised then 
-        getCore():addKeyBinding("Forward", self.origForward)
-        getCore():addKeyBinding("Backward", self.origBackward)
+        self:addKeyBinding("Forward", self.origForward)
+        self:addKeyBinding("Backward", self.origBackward)
     end
     self.isRandomised = false
     self.isLeftRightSwapped = false
