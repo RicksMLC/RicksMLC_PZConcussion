@@ -1,4 +1,5 @@
--- Rick's MLC Grass Cutting With Tool Mod
+-- Rick's MLC Concussion
+-- Encoding: ANSI
 
 IGUI_ES {
 	IGUI_RicksMLC_Ow = "¡Ow! ¡Mi cabeza!",

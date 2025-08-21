@@ -1,0 +1,8 @@
+-- Rick's MLC Concussion Mod Options
+-- Encoding: UTF-8
+-- ModOptions prompts:
+
+UI_EN {
+	UI_RicksMLCSConcussion_Options_EnableEarDamage = "Enable Ear Damage",
+	UI_RicksMLCSConcussion_Options_EnableEarDamage_Tooltip = "Set to Off if you are experiencing the Spamming Deafness issue",
+},

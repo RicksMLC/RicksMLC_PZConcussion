@@ -1,0 +1,7 @@
+-- Rick's MLC Concussion
+-- Chinese Simplified - UTF-8
+
+UI_CN {
+	UI_RicksMLCSConcussion_Options_EnableEarDamage = "导致耳朵损伤",
+	UI_RicksMLCSConcussion_Options_EnableEarDamage_Tooltip = "如果您遇到垃圾邮件失聪问题，请设置为关闭。",
+},

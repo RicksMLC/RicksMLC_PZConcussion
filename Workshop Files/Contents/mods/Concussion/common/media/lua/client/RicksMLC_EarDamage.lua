@@ -15,17 +15,18 @@
 require "ISBaseObject"
 require "MF_ISMoodle"
 require "RicksMLC_WPHS"
+require "RicksMLC_ConcussionModOptions"
 
 local RicksMLC_EarDamageMoodle = "RicksMLC_EarDamage"
 if MF then
     MF.createMoodle(RicksMLC_EarDamageMoodle)
 end
 
-local volumeThreshold = 50
-local timespanThresholdSeconds = 3
-local deafTriggerVolume = 3000
-
 RicksMLC_EarDamage = ISBaseObject:derive("RicksMLC_EarDamage")
+
+RicksMLC_EarDamage.volumeThreshold = 50
+RicksMLC_EarDamage.timespanThresholdSeconds = 3
+RicksMLC_EarDamage.deafTriggerVolume = 3000
 
 local RicksMLC_EarDamageModKey = "RicksMLC_EarDamage"
 --local RicksMLC_EarDamageRecord = "RicksMLC_EarDamageRecord"
@@ -98,12 +99,14 @@ function RicksMLC_EarDamage.Dump(roomArea, radius, volumeWithGain)
         .. " Rad: " .. PZMath.roundToInt(radius)
         .. " Vol: " .. tostring(PZMath.roundToInt(volumeWithGain))
         .. " Tot: " .. tostring(PZMath.roundToInt(currentEarDamage["totalVolume"] + volumeWithGain))
-        .. " Max: " .. tostring(deafTriggerVolume))
+        .. " Max: " .. tostring(RicksMLC_EarDamage.deafTriggerVolume))
 end
 
 function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource) 
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound()")
     if getPlayer():isInvincible() or getPlayer():isGodMod() then return end
+
+    if not RicksMLC_ConcussionModOptions:IsEarDamageOn() then return end
 
     if getPlayer():HasTrait("Deaf") then return end
 
@@ -116,7 +119,7 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
     -- end
 
     local volumeWithGain = RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
-    if volumeWithGain >= volumeThreshold then
+    if volumeWithGain >= RicksMLC_EarDamage.volumeThreshold then
 
         if RicksMLC_WPHS.IsWearingHearingProtection() then
             --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound(): Ear Protection on = no damage")
@@ -147,7 +150,7 @@ function RicksMLC_EarDamage.OnEveryOneMinute()
         local firstTime = currentEarDamage["firstTimeStamp"]
         local curTimeStamp = getTimestamp()
         local timespan = curTimeStamp - firstTime
-        if timespan > timespanThresholdSeconds then
+        if timespan > RicksMLC_EarDamage.timespanThresholdSeconds then
             -- Enough time has passed, so reset
             getPlayer():getModData()[RicksMLC_EarDamageModKey] = nil
             RicksMLC_EarDamage.ClearMoodles()
@@ -174,7 +177,7 @@ end
 function RicksMLC_EarDamage:ShowDeafWarning(experiencedVolume)
     if MF and getPlayer() then
         -- badness: 0.5 > n > 0
-        local volRatio = experiencedVolume / deafTriggerVolume
+        local volRatio = experiencedVolume / RicksMLC_EarDamage.deafTriggerVolume
         local badness = 0.5 - (0.5 * (volRatio))
 
         if badness > 0.4 then return end
@@ -199,14 +202,14 @@ function RicksMLC_EarDamage:StartImmediateDeafness()
             = { firstTimeStamp = getTimestamp(), totalVolume = volumeWithGain }
     end
     local currentEarDamage = getPlayer():getModData()[RicksMLC_EarDamageModKey]
-    currentEarDamage["totalVolume"] = deafTriggerVolume + 1-- force the deafness
+    currentEarDamage["totalVolume"] = RicksMLC_EarDamage.deafTriggerVolume + 1-- force the deafness
     self:StartDeafness(currentEarDamage)
 end
 
 function RicksMLC_EarDamage:StartDeafness(currentEarDamage)
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:StartDeafness()")
 
-    if currentEarDamage["totalVolume"] <= deafTriggerVolume then
+    if currentEarDamage["totalVolume"] <= RicksMLC_EarDamage.deafTriggerVolume then
         return false
     end
     
@@ -296,9 +299,9 @@ function RicksMLC_EarDamage.OnCreatePlayer(playerIndex, player)
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.CreatePlayer()")
 
     if not SandboxVars.RicksMLC_EarDamage.Enable then return end
-    volumeThreshold = SandboxVars.RicksMLC_EarDamage.VolumeThreshold
-    timespanThresholdSeconds = SandboxVars.RicksMLC_EarDamage.TimespanThresholdSeconds
-    deafTriggerVolume = SandboxVars.RicksMLC_EarDamage.DeafTriggerVolume
+    RicksMLC_EarDamage.volumeThreshold = SandboxVars.RicksMLC_EarDamage.VolumeThreshold
+    RicksMLC_EarDamage.timespanThresholdSeconds = SandboxVars.RicksMLC_EarDamage.TimespanThresholdSeconds
+    RicksMLC_EarDamage.deafTriggerVolume = SandboxVars.RicksMLC_EarDamage.DeafTriggerVolume
     
     if player ~= getPlayer() then return end
     -- FIXME: How to handle multiplayer?

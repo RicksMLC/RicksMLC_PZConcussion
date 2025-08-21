@@ -1,0 +1,7 @@
+-- Rick's MLC Concussion
+-- Encoding: ANSI
+
+UI_ES {
+	UI_RicksMLCSConcussion_Options_EnableEarDamage = "Habilitar daño auditivo",
+	UI_RicksMLCSConcussion_Options_EnableEarDamage_Tooltip = "Configúrelo en Off si está experimentando el problema de Sordera por Spam.",
+},

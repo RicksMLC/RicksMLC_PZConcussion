@@ -1,4 +1,5 @@
 -- Rick's MLC Concussion
+-- Encoding: ANSI
 
 Sandbox_PT = {
     Sandbox_RicksMLC_Concussion = "Rick's MLC Concussão",
