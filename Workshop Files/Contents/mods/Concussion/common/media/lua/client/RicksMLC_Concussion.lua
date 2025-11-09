@@ -88,7 +88,6 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
         end
         character:addWorldSoundUnlessInvisible(radius, weapon:getSoundVolume(), false);
         character:playSound(weapon:getSwingSound());
-        character:startMuzzleFlash()
         if weapon:haveChamber() then
             weapon:setRoundChambered(false)
         end
