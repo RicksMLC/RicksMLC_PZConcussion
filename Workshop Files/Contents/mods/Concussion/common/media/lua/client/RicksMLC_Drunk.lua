@@ -212,7 +212,9 @@ function RicksMLC_Drunk:GetChanceToTrip()
 end
 
 function RicksMLC_Drunk:HandleEveryOneMinute()
-    local drunkMoodleLevel = getPlayer():getMoodles():getMoodleLevel(MoodleType.Drunk)
+    if not getPlayer():getMoodles() then return end
+
+    local drunkMoodleLevel = getPlayer():getMoodles():getMoodleLevel(MoodleType.DRUNK)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk:HandleEveryOneMinute() drunkLevel:" .. tostring(self.drunkLevel))
 
     if getPlayer():isGodMod() then
@@ -292,7 +294,7 @@ function RicksMLC_Drunk:StopDrunkHandler()
 end
 
 function RicksMLC_Drunk.IsDrunk()
-    local drunkLvl = getPlayer():getMoodles():getMoodleLevel(MoodleType.Drunk)
+    local drunkLvl = getPlayer():getMoodles():getMoodleLevel(MoodleType.DRUNK)
     --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk.IsDrunk() drunkLevel:" .. tostring(drunkLvl))
     return drunkLvl >= 1
 end
@@ -323,7 +325,7 @@ function RicksMLC_Drunk.HandleISActionComplete(self)
 
     -- item:isAlcoholic() returns false for most liquids, so just check if the player is drunk
     local stats = getPlayer():getStats()
-    local drunkenness = stats:getDrunkenness()
+    local drunkenness = stats:get(CharacterStat.INTOXICATION)
 
     if drunkenness > 0 then
         RicksMLC_Drunk.StartDrunkHandler()

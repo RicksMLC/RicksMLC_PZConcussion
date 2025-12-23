@@ -108,7 +108,7 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
 
     if not RicksMLC_ConcussionModOptions:IsEarDamageOn() then return end
 
-    if getPlayer():HasTrait("Deaf") then return end
+    if getPlayer():hasTrait(CharacterTrait.DEAF) then return end
 
     if not instanceof(objSource, "IsoPlayer") then return end
 
@@ -248,14 +248,14 @@ end
 
 function RicksMLC_EarDamage:ApplyDeafTraits()
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:ApplyDeafTraits()")
-    if getPlayer():HasTrait("Deaf") then return end
+    if getPlayer():hasTrait(CharacterTrait.DEAF) then return end
 
-    getPlayer():getTraits():add("Deaf")
+    getPlayer():getCharacterTraits():add(CharacterTrait.DEAF)
 end
 
 function RicksMLC_EarDamage:RestoreTraits()
     --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:RestoreTraits()")
-    getPlayer():getTraits():remove("Deaf")
+    getPlayer():getCharacterTraits():remove(CharacterTrait.DEAF)
 end
 
 function RicksMLC_EarDamage:IsTimerOn()
@@ -315,7 +315,7 @@ function RicksMLC_EarDamage.OnCreatePlayer(playerIndex, player)
     -- end
 
     local currentEarDamage = player:getModData()[RicksMLC_EarDamageModKey]
-    if not currentEarDamage and player:HasTrait("Deaf") then
+    if not currentEarDamage and player:hasTrait(CharacterTrait.DEAF) then
         Events.OnWorldSound.Remove(RicksMLC_EarDamage.OnWorldSound)
         --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.CreatePlayer() player is already deaf - do not subscribe to sound events")
         return

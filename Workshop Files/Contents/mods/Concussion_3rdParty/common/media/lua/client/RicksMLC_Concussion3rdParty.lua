@@ -10,22 +10,22 @@ function RicksMLC_WPHS.IsWearingHearingProtection(self)
 
 
 
-    local hat = getPlayer():getWornItem("Hat")
+    local hat = getPlayer():getWornItem(ItemBodyLocation.HAT)
     if hat and hat:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
 
     -- AuthenticZ compatibility: The Hat_EarMuff_Protectors_AZ are on HeadExtra (or will be when AuthenticZ update is pushed)
     if RicksMLC_WPHS.Instance().isAuthenticZ then
-        local headExtra = getPlayer():getWornItem("HeadExtra")
+        local headExtra = getPlayer():getWornItem(ItemBodyLocation.HEAD_EXTRA)
         if headExtra and headExtra:getType():find("Hat_EarMuff_Protectors") ~= nil  then return true end
 
         -- AuthenticZ at 18/02/2023 has incorrect body part "Necklace" - backward compatibility:
-        local necklace = getPlayer():getWornItem("Necklace")
+        local necklace = getPlayer():getWornItem(ItemBodyLocation.NECKLACE)
         if necklace and necklace:getType():find("Hat_EarMuff_Protectors") ~= nil  then return true end
     end
 
     -- Compatibility for MufflesEarsSlot
     if getActivatedMods():contains("MufflesEarsSlot") then 
-        local ears = getPlayer():getWornItem("Ears")
+        local ears = getPlayer():getWornItem(ItemBodyLocation.EARS)
         if ears and ears:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
     end
 

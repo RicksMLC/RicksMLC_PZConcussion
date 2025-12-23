@@ -11,6 +11,7 @@ require "ISBaseObject"
 require "RicksMLC_WASDCtrl"
 require "RicksMLC_WPHS"
 require "RicksMLC_EarDamage"
+require "RicksMLC_ConcussionShared"
 
 require "MF_ISMoodle"
 
@@ -80,60 +81,11 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
     local chance = ZombRand(100)
     if chance > SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance then return end
 
-    --Copied from ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
-    if ISReloadWeaponAction.canShoot(character, weapon) then
-        local radius = weapon:getSoundRadius();
-        if isClient() then -- limit sound radius in MP
-            radius = radius / 1.8
-        end
-        character:addWorldSoundUnlessInvisible(radius, weapon:getSoundVolume(), false);
-        character:playSound(weapon:getSwingSound());
-        if weapon:haveChamber() then
-            weapon:setRoundChambered(false)
-        end
-
-        ISReloadWeaponAction.onShoot(character, weapon) -- Handles the weapon discharge ammunition
-
-        chance = ZombRand(100)
-        if chance <= SandboxVars.RicksMLC_Concussion.AccidentalDischargeDeafnessChance and not RicksMLC_WPHS.IsWearingHearingProtection() then
-            RicksMLC_EarDamage.Instance():StartImmediateDeafness()
-        end
-
-        -- Probability to hit:
-        --  Base chance is 60% with 20% chance of hitting a zombie
-        --  Unlucky is 85% shoot self, with 10% shoot zombie
-        --  Lucky is 10% self, with 90% chance of hitting a zombie
-        local baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfBaseChance
-        local zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieChance
-        if character:HasTrait("Lucky") then
-            baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfLuckyChance
-            zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieLuckyChance
-        elseif character:HasTrait("Unlucky") then
-            baseChance = SandboxVars.RicksMLC_Concussion.ShootSelfUnluckyChance
-            zombieChance = SandboxVars.RicksMLC_Concussion.ShootZombieUnluckyChance
-        end
-        local n = ZombRand(100)
-        if n <= baseChance then
-            -- Shot yourself
-            character:Hit(weapon, character, 0, false, 0)
-        else
-            local z = ZombRand(100)
-            if z <= zombieChance then
-                -- Shoot a zombie
-                local zombie = getCell():getNearestVisibleZombie(character:getPlayerNum())
-                if zombie then
-                    local distance = IsoUtils.DistanceToSquared(zombie:getX(), zombie:getY(), zombie:getZ(),
-                                                                character:getX(), character:getY(), character:getZ())
-                    if distance <= (weapon:getMaxRange() * weapon:getMaxRange()) then
-                        zombie:Hit(weapon, character, 0, false, 0)
-                        zombie:knockDown(false)
-                    end
-                end
-            end
-        end
-    else
-        character:playSound(weapon:getClickSound())
+    if isClient() then
+        sendClientCommand("RicksMLC_Concussion", "AccidentalDischarge", { } )
+        return
     end
+    RicksMLC_ConcussionShared.AccidentalDischarge(character)
 end
 
 function RicksMLC_Concussion:Concuss(character, concussTime)

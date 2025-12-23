@@ -25,7 +25,7 @@ function RicksMLC_WPHS:new()
             o.isAlreadyHardOfHearing = wphsData["IsAlreadyHardOfHearing"]
             --DebugLog.log(DebugType.Mod, "RicksMLC_WPHS:new(): has wphsData. Already: " .. ((o.isAlreadyHardOfHearing and "true") or "false"))
         else
-            o.isAlreadyHardOfHearing = getPlayer():HasTrait("HardOfHearing")
+            o.isAlreadyHardOfHearing = getPlayer():hasTrait(CharacterTrait.HARD_OF_HEARING) --"HardOfHearing")
             getPlayer():getModData()["RicksMLC_WPHS"] = { IsAlreadyHardOfHearing = o.isAlreadyHardOfHearing }
             --DebugLog.log(DebugType.Mod, "RicksMLC_WPHS:new(): no wphsData. Already: " .. ((o.isAlreadyHardOfHearing and "true") or "false"))
         end
@@ -40,12 +40,14 @@ function RicksMLC_WPHS:new()
 end
 
 function RicksMLC_WPHS.IsAuthenticZ()
-    local group = BodyLocations.getGroup("Human")
-    return group:getLocation("HeadExtra") ~= nil
+    -- local group = BodyLocations.getGroup("Human")
+    -- return group:getLocation(ItemBodyLocation."HeadExtra") ~= nil
+    -- FIXME: fix this when AuthenticZ is updated to B42
+    return false
 end
 
 function RicksMLC_WPHS.IsWearingHearingProtection()
-    local hat = getPlayer():getWornItem("Hat")
+    local hat = getPlayer():getWornItem(ItemBodyLocation.HAT)
     if hat and hat:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
 
     -- AuthenticZ compatibility: The Hat_EarMuff_Protectors_AZ are on HeadExtra (or will be when AuthenticZ update is pushed)
@@ -60,7 +62,7 @@ function RicksMLC_WPHS.IsWearingHearingProtection()
 
     -- Compatibility for MufflesEarsSlot
     if getActivatedMods():contains("MufflesEarsSlot") then 
-        local ears = getPlayer():getWornItem("Ears")
+        local ears = getPlayer():getWornItem(ItemBodyLocation.EARS)
         if ears and ears:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
     end
 
@@ -78,14 +80,14 @@ function RicksMLC_WPHS.Dump()
 end
 
 function RicksMLC_WPHS:ApplyTraits()
-    if getPlayer():HasTrait("HardOfHearing") then return end
+    if getPlayer():hasTrait(CharacterTrait.HARD_OF_HEARING) then return end
 
-    getPlayer():getTraits():add("HardOfHearing")
+    getPlayer():getCharacterTraits():add(CharacterTrait.HARD_OF_HEARING)
 end
 
 function RicksMLC_WPHS:RestoreTraits()
     if not self.isAlreadyHardOfHearing then
-        getPlayer():getTraits():remove("HardOfHearing")
+        getPlayer():getCharacterTraits():remove(CharacterTrait.HARD_OF_HEARING)
     end
 end
 
