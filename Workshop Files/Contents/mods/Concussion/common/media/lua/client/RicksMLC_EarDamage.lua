@@ -50,6 +50,23 @@ function RicksMLC_EarDamage:new()
     o.timerEndSeconds = 0
     o.deafnessStarted = false
     o.transitionToDeafTime = 0.32
+    -- o.isAlreadyDeaf = false
+
+    -- if getPlayer() then
+    --     local isAlreadyDeaf = getPlayer():getModData()["RicksMLC_IsAlreadyDeaf"]
+    --     if isAlreadyDeaf then
+    --         o.isAlreadyDeaf = isAlreadyDeaf
+    --         --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:new(): has isAlreadyDeaf. Already: " .. ((o.isAlreadyDeaf and "true") or "false"))
+    --     else
+    --         -- no data yet, use the character trait
+    --         getPlayer():getModData()["RicksMLC_IsAlreadyDeaf"] = getPlayer():hasTrait(CharacterTrait.DEAF)
+    --         o.isAlreadyDeaf = getPlayer():hasTrait(CharacterTrait.DEAF) --"HardOfHearing")
+    --         getPlayer():sync()
+    --     end
+    -- else
+    --     o.isAlreadyDeaf = false
+    -- end
+
 
     return o
 end
@@ -130,6 +147,7 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
         if not currentEarDamage then
             getPlayer():getModData()[RicksMLC_EarDamageModKey] 
                 = { firstTimeStamp = getTimestamp(), totalVolume = volumeWithGain }
+            getPlayer():sync()
             return
         end
         -- If we get this far, we are going deaf
@@ -200,6 +218,7 @@ function RicksMLC_EarDamage:StartImmediateDeafness()
     if not currentEarDamage then
         getPlayer():getModData()[RicksMLC_EarDamageModKey] 
             = { firstTimeStamp = getTimestamp(), totalVolume = volumeWithGain }
+        getPlayer():sync()
     end
     local currentEarDamage = getPlayer():getModData()[RicksMLC_EarDamageModKey]
     currentEarDamage["totalVolume"] = RicksMLC_EarDamage.deafTriggerVolume + 1-- force the deafness
@@ -251,11 +270,19 @@ function RicksMLC_EarDamage:ApplyDeafTraits()
     if getPlayer():hasTrait(CharacterTrait.DEAF) then return end
 
     getPlayer():getCharacterTraits():add(CharacterTrait.DEAF)
+    if isClient() then
+        -- Inform the server to add the trait
+        sendClientCommand(getPlayer(),"RicksMLC_Concussion", "AddDeaf", {})
+    end
 end
 
 function RicksMLC_EarDamage:RestoreTraits()
-    --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:RestoreTraits()")
+    DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage:RestoreTraits()")
     getPlayer():getCharacterTraits():remove(CharacterTrait.DEAF)
+    if isClient() then
+        -- Inform the server to add the trait
+        sendClientCommand(getPlayer(),"RicksMLC_Concussion", "RemoveDeaf", {})
+    end
 end
 
 function RicksMLC_EarDamage:IsTimerOn()
@@ -313,6 +340,9 @@ function RicksMLC_EarDamage.OnCreatePlayer(playerIndex, player)
     --     -- This is a new player
     --     player:getModData()[RicksMLC_EarDamageRecord] = { numDeafEvents = 0, dateTimeLastEvent = 0 }
     -- end
+
+    -- handle residual deafness as oppposed to real deafness
+    --local isAlreadyDeaf = player:getModData()["RicksMLC_IsAlreadyDeaf"]
 
     local currentEarDamage = player:getModData()[RicksMLC_EarDamageModKey]
     if not currentEarDamage and player:hasTrait(CharacterTrait.DEAF) then

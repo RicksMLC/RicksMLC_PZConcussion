@@ -6,7 +6,7 @@ Events.OnServerCommand.Add(function(module, command, args)
     if module ~= "RicksMLC_Concussion" then return end
 
     if command == "PlayWeaponSound" then
-        local character = getSpecificPlayer(args.playerID)
+        local character = RicksMLC_ConcussionServerUtils.GetPlayer(args.username, false)
         RicksMLC_ConcussionShared.PlayWeaponSound(character, args.soundName)
     end        
 end)
@@ -25,7 +25,7 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
         end
         character:addWorldSoundUnlessInvisible(radius, weapon:getSoundVolume(), false);
         if isServer() then
-            sendServerCommand('RicksMLC_Concussion', 'PlayWeaponSound', { playerID = character:getOnlineID(), soundName = weapon:getSwingSound() })
+            sendServerCommand('RicksMLC_Concussion', 'PlayWeaponSound', { playerID = character:getOnlineID(), username = character:getUsername(), soundName = weapon:getSwingSound() })
         else
             RicksMLC_ConcussionShared.PlayWeaponSound(character, weapon:getSwingSound())
         end

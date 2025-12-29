@@ -27,6 +27,7 @@ function RicksMLC_WPHS:new()
         else
             o.isAlreadyHardOfHearing = getPlayer():hasTrait(CharacterTrait.HARD_OF_HEARING) --"HardOfHearing")
             getPlayer():getModData()["RicksMLC_WPHS"] = { IsAlreadyHardOfHearing = o.isAlreadyHardOfHearing }
+            getPlayer():sync()
             --DebugLog.log(DebugType.Mod, "RicksMLC_WPHS:new(): no wphsData. Already: " .. ((o.isAlreadyHardOfHearing and "true") or "false"))
         end
     else
@@ -83,11 +84,19 @@ function RicksMLC_WPHS:ApplyTraits()
     if getPlayer():hasTrait(CharacterTrait.HARD_OF_HEARING) then return end
 
     getPlayer():getCharacterTraits():add(CharacterTrait.HARD_OF_HEARING)
+    if isClient() then
+        -- Inform the server to add the trait
+        sendClientCommand(getPlayer(),"RicksMLC_Concussion", "AddHardOfHearing", {})
+    end
 end
 
 function RicksMLC_WPHS:RestoreTraits()
     if not self.isAlreadyHardOfHearing then
         getPlayer():getCharacterTraits():remove(CharacterTrait.HARD_OF_HEARING)
+        if isClient() then
+            -- Inform the server to add the trait
+            sendClientCommand(getPlayer(),"RicksMLC_Concussion", "RemoveHardOfHearing", {})
+        end
     end
 end
 

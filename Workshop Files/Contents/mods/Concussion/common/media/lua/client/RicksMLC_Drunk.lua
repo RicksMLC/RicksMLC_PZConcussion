@@ -287,7 +287,6 @@ function RicksMLC_Drunk:StopDrunkHandler()
     self:StopStaggerTimer()
     Events.EveryOneMinute.Remove(RicksMLC_Drunk.OnEveryOneMinute)
     self.drunkCheckNum = 0
-    self.drunkLevel = drunkMoodleLevel
     self.started = false
     self.chanceToTrip = 0
     self.chanceToStagger = 0
