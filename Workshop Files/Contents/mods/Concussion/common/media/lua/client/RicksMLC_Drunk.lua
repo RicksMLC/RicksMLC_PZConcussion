@@ -155,6 +155,7 @@ function RicksMLC_Drunk:TripPlayer()
 	self.character:setVariable("BumpFall", true);
     -- Falling over while drunk and carrying a loaded firearm may be hazardous to your health.
     RicksMLC_Concussion.Instance():AccidentalDischarge(self.character)
+    self.character:sync()
     self:StartCooldown()
 end
 
@@ -331,22 +332,22 @@ function RicksMLC_Drunk.HandleISActionComplete(self)
     end    
 end
 
-local origDrinkFluidActionComplete = ISDrinkFluidAction.complete
-function ISDrinkFluidAction:complete()
+local origDrinkFluidActionPerform = ISDrinkFluidAction.perform
+function ISDrinkFluidAction:perform()
 
-    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISDrinkFluidAction:complete")
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISDrinkFluidAction:perform")
 
-    origDrinkFluidActionComplete(self)
+    origDrinkFluidActionPerform(self)
     RicksMLC_Drunk.HandleISActionComplete(self)
 end
 
 -- B42.01 Box wine uses the ISEatFoodAction for some reason
-local origISEatFoodActionComplete = ISEatFoodAction.complete
-function ISEatFoodAction:complete()
+local origISEatFoodActionPerform = ISEatFoodAction.perform
+function ISEatFoodAction:perform()
 
-    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISEatFoodAction:complete")
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Drunk  ISEatFoodAction:perform")
 
-    origISEatFoodActionComplete(self)
+    origISEatFoodActionPerform(self)
     RicksMLC_Drunk.HandleISActionComplete(self)
 end
 

@@ -2,11 +2,28 @@
 
 RicksMLC_ConcussionShared = {}
 
+function RicksMLC_ConcussionShared.GetPlayer(userName, verbose)
+    local player = getPlayerFromUsername(userName)
+    if not player then
+        if verbose then DebugLog.log(DebugType.Mod, "RicksMLC_ConcussionShared.GetPlayer() Error: player username '" .. userName .. "' not found.  Current users:") end
+        local playerList = getOnlinePlayers()
+        for i = 0, playerList:size()-1 do
+            if verbose then  DebugLog.log(DebugType.Mod, "  Username '" .. playerList:get(i):getUsername() .. "'")  end
+            if playerList:get(i):getUsername() == userName then
+                if verbose then DebugLog.log(DebugType.Mod, "  Username '" .. playerList:get(i):getUsername() .. "' found ¯\_(ツ)_/¯ ") end
+                player = playerList:get(i)
+                break
+            end
+        end
+    end
+    return player
+end
+
 Events.OnServerCommand.Add(function(module, command, args)
     if module ~= "RicksMLC_Concussion" then return end
 
     if command == "PlayWeaponSound" then
-        local character = RicksMLC_ConcussionServerUtils.GetPlayer(args.username, false)
+        local character = RicksMLC_ConcussionShared.GetPlayer(args.username, false)
         RicksMLC_ConcussionShared.PlayWeaponSound(character, args.soundName)
     end        
 end)
@@ -16,6 +33,7 @@ function RicksMLC_ConcussionShared.PlayWeaponSound(character, soundName)
 end
 
 function RicksMLC_ConcussionShared.AccidentalDischarge(character)
+    --DebugLog.log(DebugType.Mod, "RicksMLC_ConcussionShared.AccidentalDischarge() called for '" .. character:getUsername() .. "'")
     local weapon = character:getPrimaryHandItem()
     --Copied from ISReloadWeaponAction.attackHook = function(character, chargeDelta, weapon)
     if ISReloadWeaponAction.canShoot(character, weapon) then
@@ -24,6 +42,7 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
             radius = radius / 1.8
         end
         character:addWorldSoundUnlessInvisible(radius, weapon:getSoundVolume(), false);
+        -- FIXME: Remove when tested for duplicate sound issue
         if isServer() then
             sendServerCommand('RicksMLC_Concussion', 'PlayWeaponSound', { playerID = character:getOnlineID(), username = character:getUsername(), soundName = weapon:getSwingSound() })
         else
@@ -34,10 +53,15 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
         end
 
         ISReloadWeaponAction.onShoot(character, weapon) -- Handles the weapon discharge ammunition
+        syncHandWeaponFields(character, weapon)
 
         chance = ZombRand(100)
         if chance <= SandboxVars.RicksMLC_Concussion.AccidentalDischargeDeafnessChance and not RicksMLC_WPHS.IsWearingHearingProtection() then
-            RicksMLC_EarDamage.Instance():StartImmediateDeafness()
+            if isServer() then
+                sendServerCommand(character, 'RicksMLC_Concussion', 'StartImmediateDeafness', { playerID = character:getOnlineID(), username = character:getUsername() })
+            else
+                RicksMLC_EarDamage.Instance():StartImmediateDeafness()
+            end
         end
 
         -- Probability to hit:
@@ -58,6 +82,7 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
         if n <= baseChance then
             -- Shot yourself
             character:Hit(weapon, character, 0, false, 0)
+            character:sync()
         else
             local z = ZombRand(100)
             if z <= zombieChance then
@@ -69,6 +94,7 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
                     if distance <= (weapon:getMaxRange() * weapon:getMaxRange()) then
                         zombie:Hit(weapon, character, 0, false, 0)
                         zombie:knockDown(false)
+                        zombie:sync()
                     end
                 end
             end

@@ -82,7 +82,7 @@ function RicksMLC_Concussion:AccidentalDischarge(character)
     if chance > SandboxVars.RicksMLC_Concussion.AccidentalDischargeChance then return end
 
     if isClient() then
-        sendClientCommand("RicksMLC_Concussion", "AccidentalDischarge", { } )
+        sendClientCommand(getPlayer(), "RicksMLC_Concussion", "AccidentalDischarge", { } )
         return
     end
     RicksMLC_ConcussionShared.AccidentalDischarge(character)
@@ -244,6 +244,8 @@ function RicksMLC_Concussion.OnPlayerGetDamage(character, damageType, amount)
     -- OnPlayerGetDamage event is from zombie/characters/BodyDamage/BodyDamage.class
     -- OnPlayerGetDamage car crash damage is from zombie/vehicles/BaseVehicle.class
     
+    --DebugLog.log(DebugType.Mod, "RicksMLC_Concussion.OnPlayerGetDamage(): character='" .. character:getUsername() .. "', damageType='" .. tostring(damageType) .. "', amount=" .. tostring(amount)) 
+
     if character ~= getPlayer() then return end
     if damageType ~= "CARCRASHDAMAGE" then return end
 

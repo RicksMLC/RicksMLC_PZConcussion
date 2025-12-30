@@ -121,6 +121,16 @@ function RicksMLC_WPHS.OnCreatePlayer(playerNum, player)
 
     -- Always start a new instance on create player
     RicksMLC_WPHSInstance = nil
+
+    -- Always start a new instance on create player.  This will detect if the player is already hard of hearing.
+    local instance = RicksMLC_WPHS.Instance()
+    -- Correct the isAlreadyHardOfHearing flag if the player trait does not match
+    if instance.isAlreadyHardOfHearing and not player:hasTrait(CharacterTrait.HARD_OF_HEARING) then
+        instance.isAlreadyHardOfHearing = false
+        getPlayer():getModData()[RicksMLC_EarDamageModKey]["isAlreadyHardOfHearing"] = false
+        getPlayer():sync()
+    end
+
     RicksMLC_WPHS.Instance():HandleClothingUpdate()
 end
 

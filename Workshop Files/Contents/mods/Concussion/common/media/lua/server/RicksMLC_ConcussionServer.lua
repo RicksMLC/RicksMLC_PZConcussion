@@ -3,6 +3,14 @@
 require "RicksMLC_ConcussionShared"
 
 Events.OnClientCommand.Add(function(module, command, player, args)
+    -- if module == "vehicle" then
+    --     if command == "crash" then
+    --         RicksMLC_SharedUtils.DumpArgs(args, lvl, "RicksMLC_ConcussionServer.OnClientCommand(): vehicle crash")
+    --         return
+    --     end
+    --     -- Let vehicle module handle its own commands
+    --     return
+    -- end
     if module ~= "RicksMLC_Concussion" then return end
 
     if command == "AccidentalDischarge" then
