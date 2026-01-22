@@ -177,9 +177,9 @@ function RicksMLC_Concussion:HandleOnWeaponHitCharacter(wielder, character, hand
     -- Probability to have concussion
     -- Add factor 2 to perkLevel to give better probability.  This means lvl >= 8 is 100%
     local perkLevel = 0
-    if handWeapon:getCategories():contains("Blunt") then
+    if handWeapon:isOfWeaponCategory(WeaponCategory.SMALL_BLUNT) then
         perkLevel = wielder:getPerkLevel(Perks.Blunt);
-    elseif handWeapon:getCategories():contains("SmallBlunt") then
+    elseif handWeapon:isOfWeaponCategory(WeaponCategory.SMALL_BLUNT) then
         perkLevel = wielder:getPerkLevel(Perks.SmallBlunt);
     end
     local chance = RicksMLC_Concussion.Random(1,10)

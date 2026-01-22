@@ -56,7 +56,7 @@ function RicksMLC_ConcussionShared.AccidentalDischarge(character)
         syncHandWeaponFields(character, weapon)
 
         chance = ZombRand(100)
-        if chance <= SandboxVars.RicksMLC_Concussion.AccidentalDischargeDeafnessChance and not RicksMLC_WPHS.IsWearingHearingProtection() then
+        if chance <= SandboxVars.RicksMLC_Concussion.AccidentalDischargeDeafnessChance and not RicksMLC_WPHSShared.IsWearingHearingProtection(character) then
             if isServer() then
                 sendServerCommand(character, 'RicksMLC_Concussion', 'StartImmediateDeafness', { playerID = character:getOnlineID(), username = character:getUsername() })
             else

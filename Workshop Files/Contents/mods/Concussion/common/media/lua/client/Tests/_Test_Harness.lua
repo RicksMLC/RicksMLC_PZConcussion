@@ -160,12 +160,12 @@ function RicksMLC_TestHarness.HandleOnKeyPressed(key)
 	if key == nil then return end
 
     if not RicksMLC_TestHarnessInstance then 
-        DebugLog.log(DebugLog.Mod, "RicksMLC_TestHarness.HandleOnKeyPressed() ERROR: No instance found")
+        DebugLog.log(DebugType.Mod, "RicksMLC_TestHarness.HandleOnKeyPressed() ERROR: No instance found")
         return
     end
 
 	if key == Keyboard.KEY_F9 and RicksMLC_TestHarness.IsTestSave() then
-        DebugLog.log(DebugLog.Mod, "RicksMLC_TestHarness.HandleOnKeyPressed() Execute test")
+        DebugLog.log(DebugType.Mod, "RicksMLC_TestHarness.HandleOnKeyPressed() Execute test")
         RicksMLC_TestHarnessInstance:ExecuteTestSuites()
     end
 end

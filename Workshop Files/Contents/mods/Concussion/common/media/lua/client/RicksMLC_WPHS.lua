@@ -17,7 +17,6 @@ end
 function RicksMLC_WPHS:new()
     local o = {}
 	setmetatable(o, self)
-	self.__index = self
     
     if getPlayer() then
         local wphsData = getPlayer():getModData()["RicksMLC_WPHS"]
@@ -35,39 +34,7 @@ function RicksMLC_WPHS:new()
         o.isAlreadyHardOfHearing = false
     end
 
-    o.isAuthenticZ = RicksMLC_WPHS.IsAuthenticZ()
-
     return o
-end
-
-function RicksMLC_WPHS.IsAuthenticZ()
-    -- local group = BodyLocations.getGroup("Human")
-    -- return group:getLocation(ItemBodyLocation."HeadExtra") ~= nil
-    -- FIXME: fix this when AuthenticZ is updated to B42
-    return false
-end
-
-function RicksMLC_WPHS.IsWearingHearingProtection()
-    local hat = getPlayer():getWornItem(ItemBodyLocation.HAT)
-    if hat and hat:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
-
-    -- AuthenticZ compatibility: The Hat_EarMuff_Protectors_AZ are on HeadExtra (or will be when AuthenticZ update is pushed)
-    if RicksMLC_WPHS.Instance().isAuthenticZ then
-        local headExtra = getPlayer():getWornItem("HeadExtra")
-        if headExtra and headExtra:getType():find("Hat_EarMuff_Protectors") ~= nil  then return true end
-
-        -- AuthenticZ at 18/02/2023 has incorrect body part "Necklace" - backward compatibility:
-        local necklace = getPlayer():getWornItem("Necklace")
-        if necklace and necklace:getType():find("Hat_EarMuff_Protectors") ~= nil  then return true end
-    end
-
-    -- Compatibility for MufflesEarsSlot
-    if getActivatedMods():contains("MufflesEarsSlot") then 
-        local ears = getPlayer():getWornItem(ItemBodyLocation.EARS)
-        if ears and ears:getType():find("Hat_EarMuff_Protectors") ~= nil then return true end
-    end
-
-    return false
 end
 
 function RicksMLC_WPHS.Dump()
@@ -102,8 +69,8 @@ end
 
 function RicksMLC_WPHS:HandleClothingUpdate()
     if not getPlayer() then return end
-    
-    if self:IsWearingHearingProtection() then
+
+    if RicksMLC_WPHSShared.IsWearingHearingProtection(getPlayer()) then
         self:ApplyTraits()
     else
         self:RestoreTraits()

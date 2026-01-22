@@ -141,7 +141,7 @@ function RicksMLC_EarDamage.OnWorldSound(x, y, z, radius, volume, objSource)
     local volumeWithGain = RicksMLC_EarDamage.CalculateGain(radius, volume, objSource, x, y, z)
     if volumeWithGain >= RicksMLC_EarDamage.volumeThreshold then
 
-        if RicksMLC_WPHS.IsWearingHearingProtection() then
+        if RicksMLC_WPHSShared.IsWearingHearingProtection(getPlayer()) then
             --DebugLog.log(DebugType.Mod, "RicksMLC_EarDamage.OnWorldSound(): Ear Protection on = no damage")
             return
         end

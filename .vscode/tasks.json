@@ -28,7 +28,7 @@
             "type": "shell",
             "command": "del",
             "args": [
-                "${env:USERPROFILE}\\Zomboid\\Workshop\\RicksMLCConcussion\\Contents\\mods\\Concussion\\media\\lua\\client\\Tests"
+                "${env:USERPROFILE}\\Zomboid\\Workshop\\RicksMLCConcussion\\Contents\\mods\\Concussion\\common\\media\\lua\\client\\Tests"
             ],
             "problemMatcher": [],
             "group": {

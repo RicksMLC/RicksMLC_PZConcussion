@@ -2,15 +2,26 @@
 
 require "RicksMLC_ConcussionShared"
 
+RicksMLC_ConcussionServer = {}
+function RicksMLC_ConcussionServer.HandleVehicleCrash(player, args)
+    local vehicle = VehicleManager.instance:getVehicleByID(args.vehicle)
+    if not vehicle or not vehicle:hasPassenger() then return end
+
+    for seat=0, vehicle:getMaxPassengers()-1 do
+        local passenger = vehicle:getCharacter(seat)
+        if passenger then
+            RicksMLC_ConcussionShared.AccidentalDischarge(passenger)
+        end
+    end
+end
+
 Events.OnClientCommand.Add(function(module, command, player, args)
-    -- if module == "vehicle" then
-    --     if command == "crash" then
-    --         RicksMLC_SharedUtils.DumpArgs(args, lvl, "RicksMLC_ConcussionServer.OnClientCommand(): vehicle crash")
-    --         return
-    --     end
-    --     -- Let vehicle module handle its own commands
-    --     return
-    -- end
+    if module == "vehicle" then
+        if command == "crash" then
+            RicksMLC_ConcussionServer.HandleVehicleCrash(player, args)        
+        end
+        return
+    end
     if module ~= "RicksMLC_Concussion" then return end
 
     if command == "AccidentalDischarge" then

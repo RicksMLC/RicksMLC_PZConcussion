@@ -25,7 +25,6 @@ local MockWielder = ISBaseObject:derive("MockWielder");
 function MockWielder:new()
     local o = {} 
     setmetatable(o, self)
-    self.__index = self
 
     o.bluntPerkLevel = 0
     o.smallBluntPerkLevel = 0
@@ -50,7 +49,6 @@ local MockPlayer = ISBaseObject:derive("MockPlayer");
 function MockPlayer:new(player)
     local o = {} 
     setmetatable(o, self)
-    self.__index = self
 
     o.realPlayer = player
     o.lastThought = nil
@@ -67,7 +65,9 @@ function MockPlayer:setForwardDirection(fwdDirVec) self.realPlayer:setForwardDir
 function MockPlayer:setForceSprint(value) self.realPlayer:setForceSprint(value) end
 function MockPlayer:setSprinting(value) self.realPlayer:setSprinting(value) end
 function MockPlayer:getPlayerNum() return self.realPlayer:getPlayerNum() end
-function MockPlayer:getPerkLevel(perkType) return self.realPlayer:getPerkLevel(perkLevel) end
+function MockPlayer:getPerkLevel(perkType) return self.realPlayer:getPerkLevel(perkType) end
+function MockPlayer:isInvincible() return self.realPlayer:isInvincible() end
+function MockPlayer:isGodMod() return self.realPlayer:isGodMod() end
 
 function MockPlayer:Say(text, r, g, b, font, n, preset)
     self.realPlayer:Say(text, r, g, b, font, n, preset)
@@ -155,7 +155,6 @@ end
 function Concussion_Test:new()
     local o = {}
     setmetatable(o, self)
-    self.__index = self
 
     o.mockPlayer = nil
     o.isReady = false
@@ -333,7 +332,7 @@ end
 function Concussion_Test:newInventoryItem(type)
 	local item = nil
     if type ~= nil then 
-        item = InventoryItemFactory.CreateItem(type)
+        item = instanceItem(type)
     end
 	return item
 end
@@ -341,7 +340,7 @@ end
 local testPVPCases = {
     --  id, primary item,      bluntLvl, smallBluntLvl, strength, "random", expectedConcussion
         {1, "base.Hammer",     3,        2,             5,        4,         6 }, -- Concussed 6 seconds
-        {2, "base.Hammer",     3,        2,             5,        5,        -1 }, -- Not concussed random says no
+        {2, "base.Hammer",     3,        2,             5,        4a,        -1 }, -- Not concussed random says no
         {3, nil,               0,        1,             5,        9,        -1 }, -- not concussed no blunt weapon
         {4, "base.Crowbar",    3,        1,            10,        5,        11 }, -- concussed 11 seconds
         {5, "base.Crowbar",    0,        0,            10,        1,        11 }, -- not concussed
