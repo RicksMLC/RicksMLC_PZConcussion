@@ -58,12 +58,14 @@ function RicksMLC_WPHS:ApplyTraits()
 end
 
 function RicksMLC_WPHS:RestoreTraits()
-    if not self.isAlreadyHardOfHearing then
-        getPlayer():getCharacterTraits():remove(CharacterTrait.HARD_OF_HEARING)
-        if isClient() then
-            -- Inform the server to add the trait
-            sendClientCommand(getPlayer(),"RicksMLC_Concussion", "RemoveHardOfHearing", {})
-        end
+    if self.isAlreadyHardOfHearing then return end
+
+    if not getPlayer():hasTrait(CharacterTrait.HARD_OF_HEARING) then return end
+
+    getPlayer():getCharacterTraits():remove(CharacterTrait.HARD_OF_HEARING)
+    if isClient() then
+        -- Inform the server to add the trait
+        sendClientCommand(getPlayer(),"RicksMLC_Concussion", "RemoveHardOfHearing", {})
     end
 end
 
